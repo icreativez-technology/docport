@@ -1,0 +1,60 @@
+label {
+	display: inline-block;
+	margin-bottom: 0.5rem;
+}
+
+
+/*----Labels-----*/
+
+.label-default {
+	background: $gray;
+}
+
+.label-primary {
+	background: $primary;
+}
+
+.label-success {
+	background: $success;
+}
+
+.label-danger {
+	background: $danger;
+}
+
+.label-warning {
+	background: #fdb901;
+}
+
+.label-info {
+	background: #28afd0;
+}
+
+ul.labels-info li {
+	h4 {
+		color: #5c5c5e;
+		font-size: 13px;
+		padding-left: 15px;
+		padding-right: 15px;
+		padding-top: 5px;
+		text-transform: uppercase;
+	}
+	margin: 0;
+	a {
+		border-radius: 0;
+		color: #6a6a6a;
+		&:hover,
+		&:focus {
+			background: none repeat scroll 0 0 #d5d7de;
+			color: #6a6a6a;
+		}
+		i {
+			padding-right: 10px;
+		}
+	}
+}
+
+.label {
+	display: inline-block;
+	margin-bottom: .5rem;
+}

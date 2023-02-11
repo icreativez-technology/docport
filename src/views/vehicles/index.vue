@@ -7,7 +7,7 @@
 									<div class="card-header bg-transparent border-0">
 										<div class="header-options">
 											<h3 class="card-title mb-1">Vehicles Management</h3>
-                       <span>Show <select v-model="size" @change="fetch(1)">
+                       <span>Show <select v-model="size" @change="changeSize">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
@@ -16,7 +16,7 @@
                       </span>
 										</div>
                       <div class="card-options">
-                        Search: <input type="text" class="form-control ml-2" v-model="search" @keyup="fetch(1)">&nbsp;
+                        Search: <input type="text" class="form-control ml-2" v-model="search" @keyup="searchData">&nbsp;
 											<button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-target="#editVehicle" @click="addVehicle"><i class="fe fe-plus mr-2"></i>add</button>
 										</div>
 									</div>
@@ -57,13 +57,13 @@
                           </table>
 
                           <ul class="pagination" v-if="paginations > 1">
-                            <!-- <li class="page-item page-prev disabled">
-                              <a class="page-link" href="#" tabindex="-1">Prev</a>
-                            </li> -->
-                            <li v-for="(paginate,index) in paginations" :key="index" :id="`li-`+index"><a class="page-link" @click="fetch(paginate)">{{paginate}}</a></li>
-                            <!-- <li class="page-item page-next">
-                              <a class="page-link" href="#">Next</a>
-                            </li> -->
+                            <li class="page-item page-prev disabled">
+                              <a class="page-link" href="#" @click="onPageChange(currentPage -1)">Prev</a>
+                            </li>
+                            <li v-for="(paginate,index) in paginations" :key="index" :id="`li-`+index"><a class="page-link" @click="onPageChange(paginate)">{{paginate}}</a></li>
+                            <li class="page-item page-next">
+                              <a class="page-link" @click="onPageChange(currentPage +2)">Next</a>
+                            </li>
                           </ul>
 
 												</div>  
@@ -137,20 +137,46 @@ export default {
         const isEditable  = ref(false);
         const paginations = ref();
         const isLoading   = ref(false)
+        const responseData = ref(); 
+        const totalRecords = ref(0);
+        const currentPage = ref(0);
         onMounted(() => {
             fetch();
             fetchVehicleTypes();
         })
-       const fetch = async(pageNum = 1) =>{
+       const filterData = () => {
+        let d = responseData.value.slice(currentPage.value * size.value, (currentPage.value + 1) * size.value )
+        vehicles.value  = d;
+       }
+       const changeSize = () => {
+          currentPage.value = 0;
+          filterData();
+          paginations.value = (Math.round(totalRecords.value/size.value));
+      
+       }
+       const searchData = ()=>{
+          alert(search.value)
+       }
+       const onPageChange =(page)=>{
+          currentPage.value = page -1;
+          if(page <0){
+            currentPage.value = paginations.value -1
+          }else if(page > paginations.value){
+              currentPage.value = 0;
+          }
+          filterData();
+       }
+       const fetch = async() =>{
           isLoading.value = true;
           try{
             var params = {
-              route:'Vehicles?page='+pageNum+'&size='+size.value+'&search='+search.value
+              route:'Vehicles'
             }
             var response = await ApiResource.getAll(params)
-              if(response.data){
-                 paginations.value = (Math.round(response.data.total/10)) 
-                 vehicles.value  = response.data.vehicle
+              if(response.data){      
+                 totalRecords.value = response.data.total; 
+                 responseData.value = response.data.vehicle;
+                 changeSize();
                 }  
               }catch(error){
                 console.log(error)
@@ -244,11 +270,15 @@ export default {
           paginations,
           search,
           isLoading,
+          currentPage,
           addVehicle,
           createOrUpdate,
           show,
           deletee,
-          fetch
+          fetch,
+          changeSize,
+          searchData,
+          onPageChange
        }
     }
 }

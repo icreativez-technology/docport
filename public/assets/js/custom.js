@@ -140,13 +140,13 @@
 	});
 
 	// ______________Search
-	$('body, .navbar-collapse form[role="search"] button[type="reset"]').on('click keyup', function(event) {
-		console.log(event.currentTarget);
-		if (event.which == 27 && $('.navbar-collapse form[role="search"]').hasClass('active') ||
-		$(event.currentTarget).attr('type') == 'reset') {
-			closeSearch();
-		}
-	});
+	// $('body, .navbar-collapse form[role="search"] button[type="reset"]').on('click keyup', function(event) {
+	// 	console.log(event.currentTarget);
+	// 	if (event.which == 27 && $('.navbar-collapse form[role="search"]').hasClass('active') ||
+	// 	$(event.currentTarget).attr('type') == 'reset') {
+	// 		closeSearch();
+	// 	}
+	// });
 	function closeSearch() {
 		var $form = $('.navbar-collapse form[role="search"].active')
 		$form.find('input').val('');

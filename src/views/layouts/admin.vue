@@ -14,14 +14,6 @@ export default {
     components:{
         MainHeader,
         Sidebar
-    },
-    setup(){
-        const route = useRoute();
-        const path = computed(() =>route.name)
-
-          onMounted(() => {
-            console.log(path)
-      })
-}
+    }
 }
 </script>

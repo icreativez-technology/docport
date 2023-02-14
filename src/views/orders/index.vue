@@ -16,19 +16,16 @@
                                 </span>&nbsp; &nbsp;
                                 <h3 class="card-title mb-0">Orders Management</h3>
                                 <div class="col-md-4">
-                                    <select class="form-control" v-model="status">
+                                    <select class="form-control" v-model="status" @change="orderByStatus">
                                         <option value="all">All</option>
-                                        <option value="planned">Planned</option>
-                                        <option value="unplanned">Unplanned</option>
-                                        <option value="intransit">In Transit</option>
-                                        <option value="old">Old</option>
+                                        <option value="Draft">Draft</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" placeholder="Search Here...." />
+                                    <input type="text" class="form-control" v-model="search" placeholder="Search Here...." @keyup="fetch"/>
                                 </div>
                                 <div class="card-options">
-                                    <button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-target="#order-form"><i class="fe fe-plus mr-2"></i>Order</button>
+                                    <button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-target="#order-form" @click="addOrder"><i class="fe fe-plus mr-2"></i>Order</button>
                                 </div>
                             </div>
                             <div class="">
@@ -41,7 +38,7 @@
                                             <table class="table table-striped table-bordered text-nowrap w-100">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th><input type="checkbox" name="" id="" /></th>
+                                                        <th><input type="checkbox" v-modal="allSelected" @click="selectAll"/></th>
                                                         <th>Status</th>
                                                         <th>ID</th>
                                                         <th>Pickup</th>
@@ -57,8 +54,8 @@
                                                 </thead>
                                                 <tbody>
 
-                                                    <tr v-for="(order,index) in orders" :key="index">
-                                                        <td><input type="checkbox" name="" id="" :value="order.ID"/></td>
+                                                    <tr v-for="(order,index) in cmr.orders" :key="index">
+                                                        <td><input type="checkbox" v-model="orderIds" :value="order.ID"/></td>
                                                         <td>{{order.Status}}</td>
                                                         <td>{{order.ID}}</td>
                                                         <td><i :class="order.PickupCountryCode" data-toggle="tooltip" :title="order.PickupCountryCode"></i></td>
@@ -92,7 +89,7 @@
                                                 </tbody>
                                             </table>
 
-                                             <ul class="pagination" v-if="paginations > 1">
+                                             <ul class="pagination" v-if="paginations >= 1">
                                                 <li class="page-item page-prev disabled">
                                                 <a class="page-link" href="#" @click="onPageChange(currentPage -1)">Prev</a>
                                                 </li>
@@ -115,8 +112,7 @@
     </div>
 </template>
 <script>
-import { reactive, ref } from '@vue/reactivity';
-import { useRoute } from 'vue-router';
+import {ref } from '@vue/reactivity';
 import { useToast } from "vue-toastification";
 import { onMounted } from "vue";
 import MainHeader from "../../core/header/index.vue";
@@ -124,6 +120,7 @@ import Sidebar from "../../core/sidebar/index.vue";
 import OrderForm from "./components/create.vue";
 import CmrForm from "./components/cmr.vue";
 import ApiResource from "../../store/actions";
+import cmr from"../../store/states/index";
 export default {
     components: {
     MainHeader,
@@ -133,9 +130,9 @@ export default {
     },
     setup() {
         const toast = useToast();
-        const orders = ref([]);
         const isOrderEditable = ref(false)
-        const orderr = ref({});
+        const allSelected = ref(false)
+        const orderIds = ref([]);
         const status  = ref('all');
         const size   = ref(10);
         const search   = ref(" ");
@@ -150,18 +147,17 @@ export default {
         })
        const filterData = () => {
         let d = responseData.value.slice(currentPage.value * size.value, (currentPage.value + 1) * size.value )
-        orders.value  = d;
+        cmr.orders  = d;
        }
        const changeSize = () => {
           currentPage.value = 0;
           filterData();
-          paginations.value = (Math.round(totalRecords.value/size.value));
-      
+          paginations.value = (Math.round(totalRecords.value/size.value));      
        }
        const searchData = ()=>{
           alert(search.value)
        }
-       const onPageChange =(page)=>{
+        const onPageChange =(page)=>{
           currentPage.value = page -1;
           if(page <0){
             currentPage.value = paginations.value -1
@@ -174,11 +170,11 @@ export default {
           isLoading.value = true;
           try{
             var params = {
-              route:'ShippingOrder/GetOrders'
+              route:'ShippingOrder/GetOrders?search='+search.value
             }
             var response = await ApiResource.getAll(params)
               if(response.data){      
-                 totalRecords.value = response.data.total; 
+                 totalRecords.value = response.data.total;
                  responseData.value = response.data.order;
                  changeSize();
                 }  
@@ -190,31 +186,96 @@ export default {
             }
        }
 
+        const addOrder = async() =>{
+            cmr.order = {}
+            cmr.order.customerbill = {}
+            cmr.order.files = [];
+            cmr.order.goods = [];
+            cmr.order.profitrevenue = [];
+            cmr.order.profitexpense = [];
+         }
+
         const show = async(id) =>{
             isOrderEditable.value = true
+            isLoading.value = true
            try{
             var params = {
               route:'ShippingOrder/GetOrderbyId?id='+id
             }
             var response = await ApiResource.get(params)
               if(response.data){
-                 orderr.value = response.data
-                 orderr.value.DeliveryDateTime = "2023-02-11";
+                  cmr.order  = response.data 
                 }  
               }catch(error){
                 console.log(error)
+              }finally{
+                 isLoading.value = false
               }
          }
+
+         const selectAll =()=>{
+            orderIds.value = [];
+            if(!allSelected.value){
+                for(var i=0; i<=cmr.orders.length; i++){
+                    orderIds.value.push(cmr.orders[i].ID);
+             }
+            }else{
+               orderIds.value = []; 
+            }
+         }
+         
+         const select = () =>{
+            allSelected.value = false;
+         } 
+
+        const copyOrder = async(id) =>{
+            isLoading.value = true;
+           try{
+            var params = {
+              route:'ShippingOrder/CopyOrder?id='+id,
+              data:id
+            }
+            var response = await ApiResource.copy(params)
+              if(response.data){
+                 fetch()
+                   toast.success(response.data,{
+                    timeout: 2000
+                  });
+                }  
+              }catch(error){
+                console.log(error)
+              }finally{
+                isLoading.value = false
+              }
+         }
+
+         const orderByStatus = ()=>{
+            for(var i=0; i<cmr.orders.length; i++){
+               if(cmr.orders[i].Status == status.value){
+                  cmr.orders = cmr.orders;
+                }
+            }
+         } 
         
         return{
-          orders,
+          cmr,
           size,
           search,
           status,
+          isLoading,
+          currentPage,
+          paginations,
+          allSelected,
+          selectAll,
+          orderIds,
           isOrderEditable,
-          orderr,
+          fetch,
+          show,
+          addOrder,
+          copyOrder,
+          changeSize,
           onPageChange,
-          show
+          orderByStatus
         }
     }
 }

@@ -1,6 +1,16 @@
 import { reactive } from "vue";
 
-const vehicles = reactive([])
-const vehicle = reactive()
+const cmr = reactive({
+    order:{
+        goods:[],
+        files:[],
+        customerbill:{},
+        IsConsigneeSameAsPickup:false,
+        IsConsigneeSameAsDelivery:false
+    },
+    orders:[]
+})
 
-export default [vehicles , vehicle]
+export default cmr
+
+

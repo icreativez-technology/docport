@@ -53,5 +53,15 @@ export default {
             return e.response
             // console.log(e);
         }
+    },
+    async copy(params) {
+        try {
+            let response = await axios.post(params.route);
+            return response;
+        } catch (e) {
+            // statements
+            return e.response
+            // console.log(e);
+        }
     }
 }

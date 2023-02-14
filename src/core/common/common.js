@@ -80,5 +80,23 @@ export default {
             console.log(e)
             return e.response
         }
+    },
+    async getOrders() {
+        try {
+            var response = await axios.get("ShippingOrder/GetOrders");
+            return response.data.order;
+          } catch (e) {
+            console.log(e)
+            return e.response
+        }
+    },
+    async getVehicles() {
+        try {
+            var response = await axios.get("Vehicles");
+            return response.data.vehicle;
+          } catch (e) {
+            console.log(e)
+            return e.response
+        }
     }
 }

@@ -56,7 +56,7 @@
 														</tbody>
                           </table>
 
-                          <ul class="pagination" v-if="paginations > 1">
+                          <ul class="pagination" v-if="paginations >= 1">
                             <li class="page-item page-prev disabled">
                               <a class="page-link" href="#" @click="onPageChange(currentPage -1)">Prev</a>
                             </li>

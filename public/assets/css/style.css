@@ -18295,7 +18295,7 @@ hr.message-inner-separator {
 }
 
 .tab-menu-heading {
-    padding: 20px;
+    /* padding: 20px; */
     border: 1px solid #e8ebf1;
     border-bottom: 0;
 }
@@ -25429,6 +25429,10 @@ button:focus {
 
 .modal-header h4.modal-title {
     font-weight: 300;
+}
+
+.modal-header{
+    padding:5x !important
 }
 
 .modal-body label {

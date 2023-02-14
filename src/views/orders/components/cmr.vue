@@ -8,7 +8,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                              <div class="modal-body">
                             <div class="panel panel-primary">
                                  <form>
                                                 <div class="row">
@@ -213,14 +213,9 @@
                                                         <div class="panel panel-default">
                                                             <div class="tab-menu-heading">
                                                                 <div class="tabs-menu">
-                                                                    <!-- Tabs -->
                                                                     <ul class="nav panel-tabs">
                                                                         <li><a href="#good-cmr" class="active" data-toggle="tab">Good</a></li>
-                                                                        <li><a href="#cmr" data-toggle="tab">CMR</a></li>
-                                                                        <li><a href="#profit-cmr" data-toggle="tab">Profit</a></li>
-                                                                        <li><a href="#files-cmr" data-toggle="tab">Files</a></li>
-                                                                        <li><a href="#customer-cmr" data-toggle="tab">Customer / Bill</a></li>
-                                                                        <li><a href="#tracking-cmr" data-toggle="tab">Tracking</a></li>
+                                                                        <li><a href="#cmrVersions2" data-toggle="tab">CMR Versions</a></li>                               
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -232,7 +227,7 @@
                                                                                 <thead>
                                                                     <tr>
                                                                         <th>
-                                                                            <input type="checkbox" name="" id="" v-model="allGoodSelected" @click="selectAll"/> &nbsp; <i class="fa fa-ban" data-toggle="tooltip" @click="clearGoods" data-original-title="fa fa-ban"></i> &nbsp;
+                                                                            <input type="checkbox" name="" id=""  @click="selectAll"/> &nbsp; <i class="fa fa-ban" data-toggle="tooltip" @click="clearGoods" data-original-title="fa fa-ban"></i> &nbsp;
                                                                             <i class="ion-plus" data-toggle="tooltip" @click="addGoods" title="" data-original-title="ion-plus"></i>
                                                                         </th>
                                                                         <th class="wd-15p sorting_asc" style="width: 10%;">Qty</th>
@@ -276,8 +271,7 @@
                                                                             </table>
                                                                         </div>
                                                                     </div>
-
-                                                                    <div class="tab-pane" id="cmr">
+                                                                    <div class="tab-pane" id="cmrVersions2">
                                                                         <div class="table-responsive">
                                                                             <table class="table card-table table-vcenter text-nowrap">
                                                                                 <thead>
@@ -322,220 +316,12 @@
                                                                             </table>
                                                                         </div>
                                                                     </div>
-
-                                                                    <div class="tab-pane" id="profit-cmr">
-                                                                        <button type="button" class="btn btn-default pb-2"><i class="fe fe-plus mr-2"></i>Add</button>
-                                                                        <p><strong>Revenue</strong></p>
-                                                                        <table class="table card-table table-vcenter text-nowrap align-items-center">
-                                                                            <thead class="thead-light">
-                                                                                <tr>
-                                                                                    <th>Code / Price</th>
-                                                                                    <th>Qty / Sum</th>
-                                                                                    <th>Valuuta Summa (EUR)</th>
-                                                                                    <th>Description Date</th>
-                                                                                    <th>Carrier Country</th>
-                                                                                    <th>Transport Invoice</th>
-                                                                                    <th>Action</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td>
-                                                                                        <a class="btn btn-app btn-success"> <i class="fa fa-trash"></i></a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <hr />
-                                                                        <button type="button" class="btn btn-default pb-2"><i class="fe fe-plus mr-2"></i>Add</button>
-                                                                        <p><strong>Expense</strong></p>
-                                                                        <table class="table card-table table-vcenter text-nowrap align-items-center">
-                                                                            <thead class="thead-light">
-                                                                                <tr>
-                                                                                    <th>Code / Price</th>
-                                                                                    <th>Qty / Sum</th>
-                                                                                    <th>Valuuta Summa (EUR)</th>
-                                                                                    <th>Description Date</th>
-                                                                                    <th>Carrier Country</th>
-                                                                                    <th>Transport Invoice</th>
-                                                                                    <th>Action</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td>
-                                                                                        <a class="btn btn-app btn-success"> <i class="fa fa-trash"></i></a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="files-cmr">
-                                                                        <div class="form-group">
-                                                                            <div class="custom-file">
-                                                                                <input type="file" class="custom-file-input" name="example-file-input-custom" />
-                                                                                <label class="custom-file-label">Upload file</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="customer-cmr">
-                                                                        <div class="form-group">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <div class="expanel expanel-default">
-                                                                                        <div class="expanel-heading clearfix align-items-center">Customer</div>
-                                                                                        <div class="expanel-body">
-                                                                                            <div class="form-group">
-                                                                                                <select id="country" name="country" class="form-control">
-                                                                                                    <option value="Afghanistan">Afghanistan</option>
-                                                                                                    <option value="Åland Islands">Åland Islands</option>
-                                                                                                    <option value="Albania">Albania</option>
-                                                                                                    <option value="Algeria">Algeria</option>
-                                                                                                    <option value="American Samoa">American Samoa</option>
-                                                                                                    <option value="Andorra">Andorra</option>
-                                                                                                    <option value="Angola">Angola</option>
-                                                                                                    <option value="Anguilla">Anguilla</option>
-                                                                                                    <option value="Antarctica">Antarctica</option>
-                                                                                                    <option value="Antigua and Barbuda">Antigua and Barbuda</option>
-                                                                                                    <option value="Argentina">Argentina</option>
-                                                                                                    <option value="Armenia">Armenia</option>
-                                                                                                    <option value="Aruba">Aruba</option>
-                                                                                                    <option value="Australia">Australia</option>
-                                                                                                    <option value="Austria">Austria</option>
-                                                                                                    <option value="Azerbaijan">Azerbaijan</option>
-                                                                                                    <option value="Bahamas">Bahamas</option>
-                                                                                                    <option value="Bahrain">Bahrain</option>
-                                                                                                    <option value="Bangladesh">Bangladesh</option>
-                                                                                                </select>
-                                                                                                <label class="form-control-label">Customer</label>
-                                                                                            </div>
-
-                                                                                            <div class="col-md-3 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">Country</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-3 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">City</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-3 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">Index</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-3 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">Address</label>
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="col-md-4 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">VAT</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-4 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">Reg nr</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-4 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">ID</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="expanel expanel-default">
-                                                                                        <div class="expanel-heading clearfix align-items-center">Bill To</div>
-                                                                                        <div class="expanel-body">
-                                                                                            <div class="form-group">
-                                                                                                <input type="text" class="form-control" />
-                                                                                                <label class="form-control-label">Bill To</label>
-                                                                                            </div>
-
-                                                                                            <div class="col-md-3 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">Country</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-3 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">City</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-3 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">Index</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-3 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">Address</label>
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="col-md-4 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">VAT</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-4 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">Reg nr</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-md-4 feild">
-                                                                                                <div class="form-group">
-                                                                                                    <input type="text" class="form-control" />
-                                                                                                    <label class="form-control-label">ID</label>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="tracking-cmr">
-                                                                        <div class="form-group">
-                                                                            <h4>Tracking</h4>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
                                                     <button type="button" class="btn btn-success" @click="editCmr">{{isCmrEditable ? 'Edit' : 'Save Changes'}}</button>
@@ -545,7 +331,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+       </div>
 </template>
 <script>
 import { ref } from '@vue/reactivity';
@@ -558,6 +344,7 @@ export default {
       const cmr = ref({
         goods:[]
       });
+      const baseUrl    = ref(window.location.origin);
 
     //   onMounted(()=>{
     //      $('input').attr('readonly', true);
@@ -583,6 +370,7 @@ export default {
       return{
         isCmrEditable,
         cmr,
+        baseUrl,
         editCmr,
         addGoods,
         removeGood,

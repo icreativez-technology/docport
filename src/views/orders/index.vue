@@ -38,7 +38,7 @@
                                             <table class="table table-striped table-bordered text-nowrap w-100">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th><input type="checkbox" v-modal="allSelected" @click="selectAll"/></th>
+                                                        <th><input type="checkbox"  v-model="allSelected" @click="selectAll" /></th>
                                                         <th>Status</th>
                                                         <th>ID</th>
                                                         <th>Pickup</th>
@@ -52,16 +52,15 @@
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-
+                                                <tbody v-if="cmr.orders.length > 0">
                                                     <tr v-for="(order,index) in cmr.orders" :key="index">
-                                                        <td><input type="checkbox" v-model="orderIds" :value="order.ID"/></td>
+                                                        <td><input type="checkbox" v-model="orderIds" :value="order.ID"   @change="select"/></td>
                                                         <td>{{order.Status}}</td>
                                                         <td>{{order.ID}}</td>
                                                         <td><i :class="order.PickupCountryCode" data-toggle="tooltip" :title="order.PickupCountryCode"></i></td>
-                                                        <td>{{order.PickupDateTime}}</td>
+                                                        <td>{{order.PickupDateTime ? order.PickupDateTime : 'N/A'}}</td>
                                                         <td><i :class="order.DeliveryCountryCode" data-toggle="tooltip" :title="order.DeliveryCountryCode"></i></td>
-                                                        <td>{{order.DeliveryDateTime}}</td>
+                                                        <td>{{order.DeliveryDateTime ? order.DeliveryDateTime : 'N/A'}}</td>
                                                         <td>{{order.Qty}}</td>
                                                         <td>{{order.CustomReference}}</td>
                                                         <td>{{order.Units}}</td>
@@ -81,12 +80,15 @@
                                                     </tr>
                                                     <tr>
                                                         <td colspan="12">
-                                                            <a class="btn btn-app btn-success">
+                                                            <a class="btn btn-app btn-success" @click.prevent="deleteOrders">
                                                                 <i class="fa fa-trash"></i>
                                                             </a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
+                                                 <tr v-else>
+                                                  <td colspan="12" align="center">No Records Found</td>
+                                                </tr>
                                             </table>
 
                                              <ul class="pagination" v-if="paginations >= 1">
@@ -121,6 +123,7 @@ import OrderForm from "./components/create.vue";
 import CmrForm from "./components/cmr.vue";
 import ApiResource from "../../store/actions";
 import cmr from"../../store/states/index";
+import axios from "axios";
 export default {
     components: {
     MainHeader,
@@ -140,9 +143,12 @@ export default {
         const responseData = ref(); 
         const totalRecords = ref(0);
         const currentPage = ref(0);
+        const token  = ref();
         const isLoading   = ref(false)
         
         onMounted(() => {
+            token.value = localStorage.getItem("token");
+            axios.defaults.headers.common = {'Authorization': `Bearer ${token.value}`} 
             fetch();
         })
        const filterData = () => {
@@ -152,7 +158,8 @@ export default {
        const changeSize = () => {
           currentPage.value = 0;
           filterData();
-          paginations.value = (Math.round(totalRecords.value/size.value));      
+          paginations.value = (Math.round(totalRecords.value/size.value)); 
+          console.log(paginations.value)     
        }
        const searchData = ()=>{
           alert(search.value)
@@ -188,8 +195,12 @@ export default {
 
         const addOrder = async() =>{
             cmr.order = {}
+            cmr.order.files =[
+              {
+                "FilePath": "string"
+              }
+            ]
             cmr.order.customerbill = {}
-            cmr.order.files = [];
             cmr.order.goods = [];
             cmr.order.profitrevenue = [];
             cmr.order.profitexpense = [];
@@ -237,6 +248,28 @@ export default {
             }
             var response = await ApiResource.copy(params)
               if(response.data){
+                   await fetch()
+                   toast.success(response.data,{
+                    timeout: 2000
+                  });
+                }  
+              }catch(error){
+                console.log(error)
+              }finally{
+                isLoading.value = false
+              }
+         }
+
+        const deleteOrders = async() =>{
+            isLoading.value = true;
+           try{
+            var params = {
+              route:'ShippingOrder/DeleteOrder',
+              data:orderIds.value
+            }
+            console.log(JSON.stringify(orderIds.value))
+            var response = await ApiResource.deleteOrders(params)
+              if(response.data){
                  fetch()
                    toast.success(response.data,{
                     timeout: 2000
@@ -248,6 +281,7 @@ export default {
                 isLoading.value = false
               }
          }
+
 
          const orderByStatus = ()=>{
             for(var i=0; i<cmr.orders.length; i++){
@@ -268,11 +302,13 @@ export default {
           allSelected,
           selectAll,
           orderIds,
+          select,
           isOrderEditable,
           fetch,
           show,
           addOrder,
           copyOrder,
+          deleteOrders,
           changeSize,
           onPageChange,
           orderByStatus

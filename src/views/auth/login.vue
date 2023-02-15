@@ -67,9 +67,6 @@ export default {
                     toast.success("Login Successfully",{
                         timeout: 2000
                     });
-				    setTimeout(function () {
-                		window.location.reload();
-          		    }, 1000);
                     router.push({name:'admin.dashboard'});
                 }  
             }catch(error){

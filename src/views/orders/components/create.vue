@@ -22,8 +22,11 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="editOrder">
                                        <div class="modal-body">
+                                           <div class="dimmer active" v-if="isLoading">
+                                            <div class="lds-hourglass"></div>
+                                           </div>
                                           <div class="panel panel-primary">
-                                            <form @submit.prevent="createOrUpdate(isOrderEditable ? 'update' : 'create')">
+                                            <form @submit.prevent="createOrUpdate(isOrderEditable ? 'update' : 'create')" enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-md-3 feild">
                                                         <div class="form-group">
@@ -1314,6 +1317,7 @@ import ApiResource from "../../../store/actions/index";
 import {onMounted} from "vue";
 import { useToast } from "vue-toastification";
 import cmr from "../../../store/states/index";
+import axios from "axios";
 export default {
   props: {
     isOrderEditable: Boolean,
@@ -1322,6 +1326,7 @@ export default {
   components:{Common,ApiResource},
   setup() {
         const toast = useToast();
+        const isLoading   = ref(false)
         const isEditable = ref(false);
         const vehicles_types   = ref([]);
         const vehicles   = ref([]);
@@ -1335,10 +1340,15 @@ export default {
         const cities     = ref([]);
         const partner    = ref({});
         const goodIds    = ref([]);
+        const token  = ref();
         const isCmrEditable = ref(true);
   
 
         onMounted( async() => {  
+            
+          token.value = localStorage.getItem("token");
+          axios.defaults.headers.common = {'Authorization': `Bearer ${token.value}`}
+
           companies.value      = await Common.getCompanies()
           countries.value      = await Common.getCountries();
           orderTypes.value     = await Common.getOrderType();
@@ -1366,7 +1376,7 @@ export default {
         }
 
         const uploadImage = (event)=> {
-            cmr.order.files[0].FilePath = event.target.files[0]
+            filePath.value = event.target.files[0]
         }   
         
         const create = async()=>{
@@ -1391,8 +1401,8 @@ export default {
 
 
        const createOrUpdate = async(action)=>{
-          console.log(cmr.order)
-         // return
+            // console.log(JSON.stringify(cmr.order))
+            isLoading.value = true; 
           try{
             var params = {
               route:(action == 'create') ? 'ShippingOrder/AddOrder' : 'ShippingOrder/updateOrder',
@@ -1402,18 +1412,20 @@ export default {
             // var response =  await ApiResource.store(params)
             if(response.data){
                 cmr.order = {};
-                cmr.order.goods = []
-                cmr.orders = await Common.getOrders()
-                $('#order-form').css("display","none");
-                $('body').removeClass('modal-open');
-                $('.modal-backdrop').remove();
-                $(".modal").hide();
-                toast.success(response.data,{
+                cmr.order.goods = [];
+                 toast.success(response.data,{
                     timeout: 2000
                 });
+                $('.modal-backdrop').remove();
+                $('#order-form').css("display","none");
+                $('body').removeClass('modal-open');
+                cmr.orders = await Common.getOrders()
+               
               }  
               }catch(error){
                 console.log(error)
+              }finally{
+                isLoading.value = false
               }
         }
 
@@ -1459,6 +1471,7 @@ export default {
         return{
           cmr,  
           baseUrl,
+          isLoading,
           isEditable,
           cities,
           partner,

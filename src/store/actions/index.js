@@ -63,5 +63,15 @@ export default {
             return e.response
             // console.log(e);
         }
+    },
+    async deleteOrders(params) {
+        try {
+            let response = await axios.post(params.route,{ ids:params.data });
+            return response;
+        } catch (e) {
+            // statements
+            return e.response
+            // console.log(e);
+        }
     }
 }

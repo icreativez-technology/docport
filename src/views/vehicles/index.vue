@@ -17,7 +17,7 @@
 										</div>
                       <div class="card-options">
                         Search: <input type="text" class="form-control ml-2" v-model="search" @keyup="searchData">&nbsp;
-											<button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-target="#editVehicle" @click="addVehicle"><i class="fe fe-plus mr-2"></i>add</button>
+											<button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-backdrop="static" data-target="#editVehicle" @click="addVehicle"><i class="fe fe-plus mr-2"></i>add</button>
 										</div>
 									</div>
 									<div class="">
@@ -45,7 +45,7 @@
                                 <td>{{vehicle.RegNumber}}</td>
 																<td>{{vehicle.VehicleType}}</td>
 																<td>{{vehicle.Description}}</td>
-																<td class="text-nowrap"><a class="btn btn-app btn-primary" data-toggle="modal" data-target="#editVehicle" @click="show(vehicle.ID)">
+																<td class="text-nowrap"><a class="btn btn-app btn-primary" data-toggle="modal" data-backdrop="static" data-target="#editVehicle" @click="show(vehicle.ID)">
                                 <i class="fa fa-edit"></i> 
                                 </a>&nbsp;
                                 <a class="btn btn-app btn-primary" @click="deletee(vehicle.ID)">

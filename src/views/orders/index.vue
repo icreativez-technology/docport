@@ -25,7 +25,7 @@
                                     <input type="text" class="form-control" v-model="search" placeholder="Search Here...." @keyup="fetch"/>
                                 </div>
                                 <div class="card-options">
-                                    <button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-target="#order-form" @click="addOrder"><i class="fe fe-plus mr-2"></i>Order</button>
+                                    <button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-target="#order-form" data-backdrop="static" @click="addOrder"><i class="fe fe-plus mr-2"></i>Order</button>
                                 </div>
                             </div>
                             <div class="">
@@ -66,11 +66,11 @@
                                                         <td>{{order.Units}}</td>
                                                         <td>{{order.Carrier}}</td>
                                                         <td class="text-nowrap">
-                                                            <a class="btn btn-app btn-primary" @click="show(order.ID)" data-toggle="modal" data-target="#order-form">
+                                                            <a class="btn btn-app btn-primary" @click="show(order.ID)" data-toggle="modal" data-target="#order-form" data-backdrop="static">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
                                                             &nbsp;
-                                                            <button type="button" class="btn btn-app btn-purple mr-2 mt-1 mb-1" data-toggle="modal" @click="cmrForm" data-target="#cmrForm">CMR</button>
+                                                            <button type="button" class="btn btn-app btn-purple mr-2 mt-1 mb-1" data-toggle="modal" data-backdrop="static"  @click="cmrForm" data-target="#cmrForm">CMR</button>
                                                             <button type="button" class="btn btn-cyan" data-toggle="modal" data-target="#exampleModal0"><i class="fa fa-share-alt mr-2"></i></button>
                                                             &nbsp;
                                                             <a class="btn btn-app btn-gray"   @click="copyOrder(order.ID)">
@@ -109,7 +109,7 @@
                 </div>
             </div>
         </div>
-        <OrderForm :isOrderEditable="isOrderEditable"/>
+        <OrderForm/>
         <CmrForm />
     </div>
 </template>
@@ -133,7 +133,6 @@ export default {
     },
     setup() {
         const toast = useToast();
-        const isOrderEditable = ref(false)
         const allSelected = ref(false)
         const orderIds = ref([]);
         const status  = ref('all');
@@ -194,21 +193,33 @@ export default {
        }
 
         const addOrder = async() =>{
+
+          cmr.isOrderEditable = false
+          cmr.isReadOnly = false
+          cmr.isSave     = false
+
+           $('input').attr('readonly', false);
+           $('select').attr("disabled", false); 
+
             cmr.order = {}
-            cmr.order.files =[
-              {
-                "FilePath": "string"
-              }
-            ]
             cmr.order.customerbill = {}
             cmr.order.goods = [];
             cmr.order.profitrevenue = [];
             cmr.order.profitexpense = [];
+            cmr.order.isReadOnly = false
          }
 
         const show = async(id) =>{
-            isOrderEditable.value = true
+            
+            cmr.isOrderEditable = true
+            cmr.isReadOnly = true
+            cmr.isSave     = true
+
+            $('input').attr('disabled', true);
+            $('select').attr("disabled", true);
+            
             isLoading.value = true
+            
            try{
             var params = {
               route:'ShippingOrder/GetOrderbyId?id='+id
@@ -303,7 +314,6 @@ export default {
           selectAll,
           orderIds,
           select,
-          isOrderEditable,
           fetch,
           show,
           addOrder,

@@ -5,7 +5,7 @@
             <div class="modal-dialog custom" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                     </div>
@@ -26,11 +26,11 @@
                                             <div class="lds-hourglass"></div>
                                            </div>
                                           <div class="panel panel-primary">
-                                            <form @submit.prevent="createOrUpdate(isOrderEditable ? 'update' : 'create')" enctype="multipart/form-data">
+                                            <form @submit.prevent="createOrUpdate(cmr.isOrderEditable ? 'update' : 'create')" enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-md-3 feild">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" disabled :value="isOrderEditable ? cmr.order.Id : newOrderId" />
+                                                            <input type="text" class="form-control" readonly :value="cmr.isOrderEditable ? cmr.order.Id : newOrderId" />
                                                             <label class="form-control-label">ID</label>
                                                         </div>
                                                     </div>
@@ -76,7 +76,7 @@
                                                                             <option v-for="(company,index) in companies" :key="index" :value="company.ID">{{company.CompanyName}}</option>
                                                                         </select>
                                                                     </div>
-                                                                    <p id="add-new-partner" data-toggle="modal" data-target="#addNewPartner"><i class="ion-plus" data-toggle="tooltip" title="" data-original-title="ion-plus"></i></p>
+                                                                    <p id="add-new-partner" data-toggle="modal" data-target="#addNewPartner" data-backdrop="static"><i class="ion-plus" data-toggle="tooltip" title="" data-original-title="ion-plus"></i></p>
                                                                     <label class="form-control-label">Shipper</label>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
@@ -508,7 +508,7 @@
                                                                                     <tr>
                                                                                         <th>
                                                                                             <input type="checkbox" name="" id="" > &nbsp; <i class="fa fa-ban" data-toggle="tooltip" @click="clearGoods" data-original-title="fa fa-ban"></i> &nbsp;
-                                                                                            <i class="ion-plus" data-toggle="tooltip" @click="addGoods" title="" data-original-title="ion-plus"></i>
+                                                                                            <i class="ion-plus" data-toggle="tooltip" :disabled="cmr.isReadOnly ? true : false"  @click="addGoods" title="" data-original-title="ion-plus"></i>
                                                                                         </th>
                                                                                         <th class="wd-15p sorting_asc" style="width: 10%;">Qty</th>
                                                                                         <th class="wd-15p sorting_asc" style="width: 10%;">Units</th>
@@ -525,25 +525,25 @@
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <tr v-for="(goods,index) in cmr.order.goods" :key="index">
-                                                                                        <td class="text-center"><input type="checkbox" v-model="goodIds" /></td>
-                                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-age" v-model="goods.qty" /></td>
+                                                                                        <td class="text-center"><input type="checkbox" v-model="goodIds"  :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-age" v-model="goods.qty" :disabled="cmr.isReadOnly ? true : false"/></td>
                                                                                         <td>
-                                                                                            <select class="form-control" v-model="goods.unitid">
+                                                                                            <select class="form-control" v-model="goods.unitid" :disabled="cmr.isReadOnly ? true : false">
                                                                                                 <option value="1">EUR</option>
                                                                                                 <option value="2">EUR</option>
                                                                                                 <option value="3">EUR</option>
                                                                                             </select>
                                                                                         </td>
-                                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-age" v-model="goods.kgcalc" /></td>
-                                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-position" v-model="goods.ldm" /></td>
-                                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-position" v-model="goods.value" /></td>
-                                                                                        <td><input type="text" class="form-control" id="row-1-position" v-model="goods.description" /></td>
-                                                                                        <td><input type="number" class="form-control" id="row-1-position" v-model="goods.volumem3" /></td>
-                                                                                        <td><input type="number" class="form-control" id="row-1-position" v-model="goods.lengthcm" /></td>
-                                                                                        <td><input type="number" class="form-control" id="row-1-position" v-model="goods.widthcm" /></td>
-                                                                                        <td><input type="number" class="form-control" id="row-1-position" v-model="goods.heightcm" /></td>
+                                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-age" v-model="goods.kgcalc"  :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-position" v-model="goods.ldm"  :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-position" v-model="goods.value" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                        <td><input type="text" class="form-control" id="row-1-position" v-model="goods.description" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                        <td><input type="number" class="form-control" id="row-1-position" v-model="goods.volumem3" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                        <td><input type="number" class="form-control" id="row-1-position" v-model="goods.lengthcm" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                        <td><input type="number" class="form-control" id="row-1-position" v-model="goods.widthcm" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                        <td><input type="number" class="form-control" id="row-1-position" v-model="goods.heightcm" :disabled="cmr.isReadOnly ? true : false" /></td>
                                                                                         <td>
-                                                                                            <a class="btn btn-app btn-success" @click="removeGood(index)"><i class="fa fa-trash"></i></a>
+                                                                                            <a class="btn btn-app btn-success" :disabled="cmr.isReadOnly ? true : false" @click="removeGood(index)"><i class="fa fa-trash"></i></a>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -554,7 +554,7 @@
                                                                                     <div class="card text-center">
                                                                                         <div class="card-body">
                                                                                             <img class="avatar avatar-md brround cover-image" :src="baseUrl+`/assets/images/dashboard.png`" />
-                                                                                            <h4><input type="checkbox" class="mt-4" v-model="cmr.order.TempSensitive"/> Temp. Sensitive</h4>
+                                                                                            <h4><input type="checkbox" class="mt-4" v-model="cmr.order.TempSensitive" :disabled="cmr.isReadOnly ? true : false"/> Temp. Sensitive</h4>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -562,7 +562,7 @@
                                                                                     <div class="card text-center">
                                                                                         <div class="card-body">
                                                                                             <img class="avatar avatar-md brround cover-image" :src="baseUrl+`/assets/images/adrr.png`" />
-                                                                                            <h4><input type="checkbox" class="mt-4" v-model="cmr.order.ADRCarriage"/> ADR Carriage</h4>
+                                                                                            <h4><input type="checkbox" class="mt-4" v-model="cmr.order.ADRCarriage" :disabled="cmr.isReadOnly ? true : false"/> ADR Carriage</h4>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -570,7 +570,7 @@
                                                                                     <div class="card text-center">
                                                                                         <div class="card-body">
                                                                                             <img class="avatar avatar-md brround cover-image" :src="baseUrl+`/assets/images/handle.png`" />
-                                                                                            <h4><input type="checkbox" class="mt-4" v-model="cmr.order.FargileCarriage"/> Fargile Carriage</h4>
+                                                                                            <h4><input type="checkbox" class="mt-4" v-model="cmr.order.FargileCarriage" :disabled="cmr.isReadOnly ? true : false"/> Fargile Carriage</h4>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -625,7 +625,7 @@
                                                                     </div>
 
                                                                 <div class="tab-pane" id="profit">
-                                                                        <button type="button" class="btn btn-default pb-2" @click="addRevenue"><i class="fe fe-plus mr-2"></i>Add</button>
+                                                                        <button type="button" class="btn btn-default pb-2" :disabled="cmr.isReadOnly ? true : false" @click="addRevenue"><i class="fe fe-plus mr-2"></i>Add</button>
                                                                         <p><strong>Revenue</strong></p>
                                                                         <table class="table text-nowrap">
                                                                             <thead class="thead-light">
@@ -647,26 +647,26 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="(revenue,index) in cmr.order.profitrevenue" :key="index">
-                                                                                    <td><input type="text" class="form-control" v-model="revenue.Code" /></td>
-                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="revenue.Price" /></td>
-                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="revenue.Qty" /></td>
-                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="revenue.Sum" /></td>
-                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="revenue.Value" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="revenue.Currency" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="revenue.Description" /></td>
-                                                                                    <td><input type="date" class="form-control" v-model="revenue.Date" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="revenue.Carrier" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="revenue.Country" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="revenue.Transport" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="revenue.Invoice" /></td>
+                                                                                    <td><input type="text" class="form-control" v-model="revenue.Code" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="revenue.Price" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="revenue.Qty" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="revenue.Sum" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="revenue.Value" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="revenue.Currency" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="revenue.Description" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="date" class="form-control" v-model="revenue.Date" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="revenue.Carrier" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="revenue.Country" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="revenue.Transport" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="revenue.Invoice" :disabled="cmr.isReadOnly ? true : false"/></td>
                                                                                     <td>
-                                                                                        <a class="btn btn-app btn-success" @click="removeRevenue(index)"> <i class="fa fa-trash"></i></a>
+                                                                                        <a class="btn btn-app btn-success" :disabled="cmr.isReadOnly ? true : false" @click="removeRevenue(index)"> <i class="fa fa-trash"></i></a>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
                                                                         <hr />
-                                                                        <button type="button" class="btn btn-default pb-2" @click="addExpense"><i class="fe fe-plus mr-2"></i>Add</button>
+                                                                        <button type="button" class="btn btn-default pb-2" @click="addExpense" :disabled="cmr.isReadOnly ? true : false"><i class="fe fe-plus mr-2"></i>Add</button>
                                                                         <p><strong>Expense</strong></p>
                                                                         <table class="table text-nowrap">
                                                                             <thead class="thead-light">
@@ -688,20 +688,20 @@
                                                                             </thead>
                                                                             <tbody>
                                                                                 <tr v-for="(expense,index) in cmr.order.profitexpense" :key="index">
-                                                                                    <td><input type="text" class="form-control" v-model="expense.ECode" /></td>
-                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="expense.EPrice" /></td>
-                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="expense.EQty" /></td>
-                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="expense.ESum" /></td>
-                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="expense.EValue" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="expense.ECurrency" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="expense.EDescription" /></td>
-                                                                                    <td><input type="date" class="form-control" v-model="expense.EDate" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="expense.ECarrier" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="expense.ECountry" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="expense.ETransport" /></td>
-                                                                                    <td><input type="text" class="form-control" v-model="expense.EInvoice" /></td>
+                                                                                    <td><input type="text" class="form-control" v-model="expense.ECode" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="expense.EPrice" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="expense.EQty"  :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="expense.ESum" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" v-model="expense.EValue" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="expense.ECurrency" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="expense.EDescription" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="date" class="form-control" v-model="expense.EDate" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="expense.ECarrier" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="expense.ECountry" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="expense.ETransport" :disabled="cmr.isReadOnly ? true : false"/></td>
+                                                                                    <td><input type="text" class="form-control" v-model="expense.EInvoice" :disabled="cmr.isReadOnly ? true : false"/></td>
                                                                                     <td>
-                                                                                        <a class="btn btn-app btn-success" @click="removeExpense(index)"> <i class="fa fa-trash"></i></a>
+                                                                                        <a class="btn btn-app btn-success"  :disabled="cmr.isReadOnly ? true : false" @click="removeExpense(index)"> <i class="fa fa-trash"></i></a>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -710,8 +710,8 @@
                                                                     <div class="tab-pane" id="files">
                                                                         <div class="form-group">
                                                                             <div class="custom-file">
-                                                                                <input type="file" class="custom-file-input" name="example-file-input-custom" @change="uploadImage"/>
-                                                                                <label class="custom-file-label">Upload file</label>
+                                                                                <input type="file" class="form-control" ref="file" multiple :disabled="cmr.isReadOnly ? true : false" @change="uploadImage"/>
+                                                                                <label class="">Upload file</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -854,396 +854,397 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-success">{{isOrderEditable ? 'Save Changes' : 'Add'}}</button>
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal" @click="closeModal">Close</button>
+                                                    <button type="button" v-if="cmr.isSave" class="btn btn-success" data-dismiss="modal" @click="editOrder">Edit</button>
+                                                    <button type="submit" v-show="!cmr.isSave" class="btn btn-success">Save Change</button>
                                                 </div>
                                             </form>
                                         </div>
                                       </div>     
                                    </div>
 
-                    <div class="tab-pane" id="cmr">
-                            <div class="modal-body">
-                            <div class="panel panel-primary">
-                                 <form>
-                                                <div class="row">
-                                                    <div class="col-md-2 lg-2 feild">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">ID</label>
-                                                        </div>
-                                                    </div>
+                                <div class="tab-pane" id="cmr">
+                                        <div class="modal-body">
+                                        <div class="panel panel-primary">
+                                            <form>
+                                                            <div class="row">
+                                                                <div class="col-md-2 lg-2 feild">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">ID</label>
+                                                                    </div>
+                                                                </div>
 
-                                                    <div class="col-md-2 lg-2 feild">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">Version nr</label>
-                                                        </div>
-                                                    </div>
+                                                                <div class="col-md-2 lg-2 feild">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">Version nr</label>
+                                                                    </div>
+                                                                </div>
 
-                                                    <div class="col-md-2 lg-2 feild">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">Index Register</label>
-                                                        </div>
-                                                    </div>
+                                                                <div class="col-md-2 lg-2 feild">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">Index Register</label>
+                                                                    </div>
+                                                                </div>
 
-                                                    <div class="col-md-3 lg-2 feild">
-                                                        <div class="form-group">
-                                                            <select name="" id="" class="form-control">
-                                                                <option value="read">INLAND</option>
-                                                                <option value="read">INLAND</option>
-                                                                <option value="read">INLAND</option>
-                                                            </select>
-                                                            <label class="form-control-label">Type</label>
-                                                        </div>
-                                                    </div>
+                                                                <div class="col-md-3 lg-2 feild">
+                                                                    <div class="form-group">
+                                                                        <select name="" id="" class="form-control">
+                                                                            <option value="read">INLAND</option>
+                                                                            <option value="read">INLAND</option>
+                                                                            <option value="read">INLAND</option>
+                                                                        </select>
+                                                                        <label class="form-control-label">Type</label>
+                                                                    </div>
+                                                                </div>
 
-                                                    <div class="col-md-3 lg-2 feild">
-                                                        <div class="form-group">
-                                                            <select name="" id="" class="form-control">
-                                                                <option value="read">Ready For Upload</option>
-                                                                <option value="read">Ready For Upload</option>
-                                                                <option value="read">Ready For Upload</option>
-                                                            </select>
-                                                            <label class="form-control-label">Status</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6 md-12 lg-1">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">1. Sender (name,address,country)</label>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">2. Consignee (name,address,country)</label>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">3. Place of delivey of the goods (address,country)</label>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">4. Place of tacking of the goods (address,country)</label>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="file" class="form-control" />
-                                                            <label class="form-control-label">5. Documents Attached</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <h3><strong>INTERNATIONAL CONSIGNMENT NOTE</strong></h3>
-                                                            <p><b>This carriage is subject, notwithstanding any clause to the contrary, to the Convention on the Contract of the International Carriage of Goods by Road (CMR)</b></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="col-md-3 feild">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" />
-                                                                <label class="form-control-label">6. Marks and nr</label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 feild">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" />
-                                                                <label class="form-control-label">7. Nr. of pages</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 feild">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" />
-                                                                <label class="form-control-label">8. Methods of packing</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3 feild">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" />
-                                                                <label class="form-control-label">9. Nature of goods</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="col-md-4 feild">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" />
-                                                                <label class="form-control-label">10. Statistical nr</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 feild">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" />
-                                                                <label class="form-control-label">11. Gross weight (kg)</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 feild">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" />
-                                                                <label class="form-control-label">12. Vol. (eur/Idm/m<sup>3</sup>)</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-sm-6 md-12 lg-1">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="eg . treatment of carriage in customs, etc" />
-                                                            <label class="form-control-label">13. Senders instruction</label>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">14. Carrier (name,address,country)</label>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">15. Successive carrirer (name,address,country)</label>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" />
-                                                            <label class="form-control-label">16. Place of tacking of the goods (address,country)</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6 table-custom">
-                                                        <div class="table-responsive">
-                                                            <table class="table card-table table-vcenter text-nowrap align-items-center">
-                                                                <tr>
-                                                                    <td>17. To be payed by</td>
-                                                                    <td>Sender</td>
-                                                                    <td>Currency</td>
-                                                                    <td>Consignee</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Carriage charges</td>
-                                                                    <td><input type="number" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Deduction</td>
-                                                                    <td><input type="number" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Balance</td>
-                                                                    <td><input type="number" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Supplier charges</td>
-                                                                    <td><input type="number" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Other</td>
-                                                                    <td><input type="number" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                    <td><input type="text" class="form-control" /></td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="panel panel-default">
-                                                            <div class="tab-menu-heading">
-                                                                <div class="tabs-menu">
-                                                                    <ul class="nav panel-tabs">
-                                                                        <li><a href="#good-cmr" class="active" data-toggle="tab">Good</a></li>
-                                                                        <li><a href="#cmrVersions2" data-toggle="tab">CMR Versions</a></li>                               
-                                                                    </ul>
+                                                                <div class="col-md-3 lg-2 feild">
+                                                                    <div class="form-group">
+                                                                        <select name="" id="" class="form-control">
+                                                                            <option value="read">Ready For Upload</option>
+                                                                            <option value="read">Ready For Upload</option>
+                                                                            <option value="read">Ready For Upload</option>
+                                                                        </select>
+                                                                        <label class="form-control-label">Status</label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="panel-body tabs-menu-body">
-                                                                <div class="tab-content">
-                                                                    <div class="tab-pane active" id="good-cmr">
-                                                                        <div class="table-responsive">
-                                                                            <table id="example" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer" role="grid" aria-describedby="example_info">
-                                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <input type="checkbox" name="" id=""  @click="selectAll"/> &nbsp; <i class="fa fa-ban" data-toggle="tooltip" @click="clearGoods" data-original-title="fa fa-ban"></i> &nbsp;
-                                                                            <i class="ion-plus" data-toggle="tooltip" @click="addGoods" title="" data-original-title="ion-plus"></i>
-                                                                        </th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Qty</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Units</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Kg Calc</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">LDM</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Value</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Description</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Volume (m3)</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Length (cm)</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Width (cm)</th>
-                                                                        <th class="wd-15p sorting_asc" style="width: 10%;">Height (cm)</th>
-                                                                        <th></th>
-                                                                      </tr>
+                                                            <div class="row">
+                                                                <div class="col-sm-6 md-12 lg-1">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">1. Sender (name,address,country)</label>
+                                                                    </div>
 
-                                                                   </thead>
-                                                                     <tbody>
-                                                                        <tr v-for="(goods,index) in cmr.goods" :key="index">
-                                                                        <td class="text-center"><input type="checkbox" v-model="goodIds" @change="select(index)" :value="goods.index"/></td>
-                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-age" v-model="goods.qty" /></td>
-                                                                        <td>
-                                                                            <select class="form-control" v-model="goods.units">
-                                                                                <option value="EUR">EUR</option>
-                                                                                <option value="EUR">EUR</option>
-                                                                                <option value="EUR">EUR</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-age" v-model="goods.kg_calc" /></td>
-                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-position" v-model="goods.ldm" /></td>
-                                                                        <td><input type="number" minlength="1" class="form-control" id="row-1-position" v-model="goods.value" /></td>
-                                                                        <td><input type="text" class="form-control" id="row-1-position" v-model="goods.description" /></td>
-                                                                        <td><input type="text" class="form-control" id="row-1-position" v-model="goods.volume" /></td>
-                                                                        <td><input type="text" class="form-control" id="row-1-position" v-model="goods.length" /></td>
-                                                                        <td><input type="text" class="form-control" id="row-1-position" v-model="goods.width" /></td>
-                                                                        <td><input type="text" class="form-control" id="row-1-position" v-model="goods.height" /></td>
-                                                                        <td>
-                                                                            <a class="btn btn-app btn-success" @click="removeGood(index)"><i class="fa fa-trash"></i></a>
-                                                                        </td>
-                                                                    </tr>                                               
-                                                                                </tbody>
-                                                                            </table>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">2. Consignee (name,address,country)</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">3. Place of delivey of the goods (address,country)</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">4. Place of tacking of the goods (address,country)</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="file" class="form-control" />
+                                                                        <label class="form-control-label">5. Documents Attached</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <h3><strong>INTERNATIONAL CONSIGNMENT NOTE</strong></h3>
+                                                                        <p><b>This carriage is subject, notwithstanding any clause to the contrary, to the Convention on the Contract of the International Carriage of Goods by Road (CMR)</b></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    <div class="col-md-3 feild">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" />
+                                                                            <label class="form-control-label">6. Marks and nr</label>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="tab-pane" id="cmrVersions2">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table card-table table-vcenter text-nowrap">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th><input type="checkbox" name="" id="" /></th>
-                                                                                        <th>Version nr</th>
-                                                                                        <th>Date / Time</th>
-                                                                                        <th>Created By</th>
-                                                                                        <th>Download</th>
-                                                                                        <th></th>
-                                                                                    </tr>
-                                                                                </thead>
+
+                                                                    <div class="col-md-3 feild">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" />
+                                                                            <label class="form-control-label">7. Nr. of pages</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3 feild">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" />
+                                                                            <label class="form-control-label">8. Methods of packing</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3 feild">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" />
+                                                                            <label class="form-control-label">9. Nature of goods</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-6">
+                                                                    <div class="col-md-4 feild">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" />
+                                                                            <label class="form-control-label">10. Statistical nr</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 feild">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" />
+                                                                            <label class="form-control-label">11. Gross weight (kg)</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4 feild">
+                                                                        <div class="form-group">
+                                                                            <input type="text" class="form-control" />
+                                                                            <label class="form-control-label">12. Vol. (eur/Idm/m<sup>3</sup>)</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-sm-6 md-12 lg-1">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" placeholder="eg . treatment of carriage in customs, etc" />
+                                                                        <label class="form-control-label">13. Senders instruction</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">14. Carrier (name,address,country)</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">15. Successive carrirer (name,address,country)</label>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" />
+                                                                        <label class="form-control-label">16. Place of tacking of the goods (address,country)</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-sm-6 table-custom">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table card-table table-vcenter text-nowrap align-items-center">
+                                                                            <tr>
+                                                                                <td>17. To be payed by</td>
+                                                                                <td>Sender</td>
+                                                                                <td>Currency</td>
+                                                                                <td>Consignee</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Carriage charges</td>
+                                                                                <td><input type="number" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Deduction</td>
+                                                                                <td><input type="number" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Balance</td>
+                                                                                <td><input type="number" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Supplier charges</td>
+                                                                                <td><input type="number" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Other</td>
+                                                                                <td><input type="number" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                <td><input type="text" class="form-control" /></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="panel panel-default">
+                                                                        <div class="tab-menu-heading">
+                                                                            <div class="tabs-menu">
+                                                                                <ul class="nav panel-tabs">
+                                                                                    <li><a href="#good-cmr" class="active" data-toggle="tab">Good</a></li>
+                                                                                    <li><a href="#cmrVersions2" data-toggle="tab">CMR Versions</a></li>                               
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="panel-body tabs-menu-body">
+                                                                            <div class="tab-content">
+                                                                                <div class="tab-pane active" id="good-cmr">
+                                                                                    <div class="table-responsive">
+                                                                                        <table id="example" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer" role="grid" aria-describedby="example_info">
+                                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>
+                                                                                        <input type="checkbox" name="" id=""  @click="selectAll"/> &nbsp; <i class="fa fa-ban" data-toggle="tooltip" @click="clearGoods" data-original-title="fa fa-ban"></i> &nbsp;
+                                                                                        <i class="ion-plus" data-toggle="tooltip" @click="addGoods" title="" data-original-title="ion-plus"></i>
+                                                                                    </th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Qty</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Units</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Kg Calc</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">LDM</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Value</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Description</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Volume (m3)</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Length (cm)</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Width (cm)</th>
+                                                                                    <th class="wd-15p sorting_asc" style="width: 10%;">Height (cm)</th>
+                                                                                    <th></th>
+                                                                                </tr>
+
+                                                                            </thead>
                                                                                 <tbody>
-                                                                                    <tr>
-                                                                                        <td><input type="checkbox" name="" id="" /></td>
-                                                                                        <td>Version 1</td>
-                                                                                        <td>27.11.2022 / 10:55</td>
-                                                                                        <td>Jaan Saan</td>
-                                                                                        <td><a href="#" class="btn btn-success">Download</a></td>
-                                                                                        <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><input type="checkbox" name="" id="" /></td>
-                                                                                        <td>Version 2</td>
-                                                                                        <td>27.11.2022 / 10:55</td>
-                                                                                        <td>John Simth</td>
-                                                                                        <td><a href="#" class="btn btn-success">Download</a></td>
-                                                                                        <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td><input type="checkbox" name="" id="" /></td>
-                                                                                        <td>Version 3</td>
-                                                                                        <td>27.11.2022 / 10:55</td>
-                                                                                        <td>Jaan Saan</td>
-                                                                                        <td><a href="#" class="btn btn-success">Download</a></td>
-                                                                                        <td><i class="fa fa-trash" aria-hidden="true"></i></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td colspan="7"><i class="fa fa-trash" aria-hidden="true"></i></td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
+                                                                                    <tr v-for="(goods,index) in cmr.goods" :key="index">
+                                                                                    <td class="text-center"><input type="checkbox" v-model="goodIds" @change="select(index)" :value="goods.index"/></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" id="row-1-age" v-model="goods.qty" /></td>
+                                                                                    <td>
+                                                                                        <select class="form-control" v-model="goods.units">
+                                                                                            <option value="EUR">EUR</option>
+                                                                                            <option value="EUR">EUR</option>
+                                                                                            <option value="EUR">EUR</option>
+                                                                                        </select>
+                                                                                    </td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" id="row-1-age" v-model="goods.kg_calc" /></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" id="row-1-position" v-model="goods.ldm" /></td>
+                                                                                    <td><input type="number" minlength="1" class="form-control" id="row-1-position" v-model="goods.value" /></td>
+                                                                                    <td><input type="text" class="form-control" id="row-1-position" v-model="goods.description" /></td>
+                                                                                    <td><input type="text" class="form-control" id="row-1-position" v-model="goods.volume" /></td>
+                                                                                    <td><input type="text" class="form-control" id="row-1-position" v-model="goods.length" /></td>
+                                                                                    <td><input type="text" class="form-control" id="row-1-position" v-model="goods.width" /></td>
+                                                                                    <td><input type="text" class="form-control" id="row-1-position" v-model="goods.height" /></td>
+                                                                                    <td>
+                                                                                        <a class="btn btn-app btn-success" @click="removeGood(index)"><i class="fa fa-trash"></i></a>
+                                                                                    </td>
+                                                                                </tr>                                               
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="tab-pane" id="cmrVersions2">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table card-table table-vcenter text-nowrap">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th><input type="checkbox" name="" id="" /></th>
+                                                                                                    <th>Version nr</th>
+                                                                                                    <th>Date / Time</th>
+                                                                                                    <th>Created By</th>
+                                                                                                    <th>Download</th>
+                                                                                                    <th></th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td><input type="checkbox" name="" id="" /></td>
+                                                                                                    <td>Version 1</td>
+                                                                                                    <td>27.11.2022 / 10:55</td>
+                                                                                                    <td>Jaan Saan</td>
+                                                                                                    <td><a href="#" class="btn btn-success">Download</a></td>
+                                                                                                    <td><i class="fa fa-trash" aria-hidden="true"></i></td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td><input type="checkbox" name="" id="" /></td>
+                                                                                                    <td>Version 2</td>
+                                                                                                    <td>27.11.2022 / 10:55</td>
+                                                                                                    <td>John Simth</td>
+                                                                                                    <td><a href="#" class="btn btn-success">Download</a></td>
+                                                                                                    <td><i class="fa fa-trash" aria-hidden="true"></i></td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td><input type="checkbox" name="" id="" /></td>
+                                                                                                    <td>Version 3</td>
+                                                                                                    <td>27.11.2022 / 10:55</td>
+                                                                                                    <td>Jaan Saan</td>
+                                                                                                    <td><a href="#" class="btn btn-success">Download</a></td>
+                                                                                                    <td><i class="fa fa-trash" aria-hidden="true"></i></td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td colspan="7"><i class="fa fa-trash" aria-hidden="true"></i></td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
 
-                                                                    <div class="tab-pane" id="profit-cmr">
-                                                                        <button type="button" class="btn btn-default pb-2"><i class="fe fe-plus mr-2"></i>Add</button>
-                                                                        <p><strong>Revenue</strong></p>
-                                                                        <table class="table card-table table-vcenter text-nowrap align-items-center">
-                                                                            <thead class="thead-light">
-                                                                                <tr>
-                                                                                    <th>Code / Price</th>
-                                                                                    <th>Qty / Sum</th>
-                                                                                    <th>Valuuta Summa (EUR)</th>
-                                                                                    <th>Description Date</th>
-                                                                                    <th>Carrier Country</th>
-                                                                                    <th>Transport Invoice</th>
-                                                                                    <th>Action</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td>
-                                                                                        <a class="btn btn-app btn-success"> <i class="fa fa-trash"></i></a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <hr />
-                                                                        <button type="button" class="btn btn-default pb-2"><i class="fe fe-plus mr-2"></i>Add</button>
-                                                                        <p><strong>Expense</strong></p>
-                                                                        <table class="table card-table table-vcenter text-nowrap align-items-center">
-                                                                            <thead class="thead-light">
-                                                                                <tr>
-                                                                                    <th>Code / Price</th>
-                                                                                    <th>Qty / Sum</th>
-                                                                                    <th>Valuuta Summa (EUR)</th>
-                                                                                    <th>Description Date</th>
-                                                                                    <th>Carrier Country</th>
-                                                                                    <th>Transport Invoice</th>
-                                                                                    <th>Action</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td><input type="text" class="form-control" /></td>
-                                                                                    <td>
-                                                                                        <a class="btn btn-app btn-success"> <i class="fa fa-trash"></i></a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
+                                                                                <div class="tab-pane" id="profit-cmr">
+                                                                                    <button type="button" class="btn btn-default pb-2"><i class="fe fe-plus mr-2"></i>Add</button>
+                                                                                    <p><strong>Revenue</strong></p>
+                                                                                    <table class="table card-table table-vcenter text-nowrap align-items-center">
+                                                                                        <thead class="thead-light">
+                                                                                            <tr>
+                                                                                                <th>Code / Price</th>
+                                                                                                <th>Qty / Sum</th>
+                                                                                                <th>Valuuta Summa (EUR)</th>
+                                                                                                <th>Description Date</th>
+                                                                                                <th>Carrier Country</th>
+                                                                                                <th>Transport Invoice</th>
+                                                                                                <th>Action</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td>
+                                                                                                    <a class="btn btn-app btn-success"> <i class="fa fa-trash"></i></a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                    <hr />
+                                                                                    <button type="button" class="btn btn-default pb-2"><i class="fe fe-plus mr-2"></i>Add</button>
+                                                                                    <p><strong>Expense</strong></p>
+                                                                                    <table class="table card-table table-vcenter text-nowrap align-items-center">
+                                                                                        <thead class="thead-light">
+                                                                                            <tr>
+                                                                                                <th>Code / Price</th>
+                                                                                                <th>Qty / Sum</th>
+                                                                                                <th>Valuuta Summa (EUR)</th>
+                                                                                                <th>Description Date</th>
+                                                                                                <th>Carrier Country</th>
+                                                                                                <th>Transport Invoice</th>
+                                                                                                <th>Action</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td><input type="text" class="form-control" /></td>
+                                                                                                <td>
+                                                                                                    <a class="btn btn-app btn-success"> <i class="fa fa-trash"></i></a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-success" @click="editCmr">{{isCmrEditable ? 'Edit' : 'Save Changes'}}</button>
-                                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-success" @click="editCmr">{{isCmrEditable ? 'Edit' : 'Save Changes'}}</button>
+                                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                   </div>
               </div>
             </div>
@@ -1318,16 +1319,11 @@ import {onMounted} from "vue";
 import { useToast } from "vue-toastification";
 import cmr from "../../../store/states/index";
 import axios from "axios";
-export default {
-  props: {
-    isOrderEditable: Boolean,
-    //cmr.order: Object
-  },   
+export default {  
   components:{Common,ApiResource},
   setup() {
         const toast = useToast();
         const isLoading   = ref(false)
-        const isEditable = ref(false);
         const vehicles_types   = ref([]);
         const vehicles   = ref([]);
         const countries   = ref([]);
@@ -1340,12 +1336,13 @@ export default {
         const cities     = ref([]);
         const partner    = ref({});
         const goodIds    = ref([]);
+        const files      = ref([]);
         const token  = ref();
         const isCmrEditable = ref(true);
   
 
-        onMounted( async() => {  
-            
+        onMounted( async() => {    
+
           token.value = localStorage.getItem("token");
           axios.defaults.headers.common = {'Authorization': `Bearer ${token.value}`}
 
@@ -1376,9 +1373,23 @@ export default {
         }
 
         const uploadImage = (event)=> {
-            filePath.value = event.target.files[0]
-        }   
+
+            for(var i = 0; i < event.target.files.length; i++){
+                 uploadFiles(event.target.files[i])
+            }
+        }  
         
+        const uploadFiles = (docs)=>{
+              const reader = new FileReader()
+               reader.onload = (event) => {
+                 files.value.push({
+                    FilePath:event.target.result,
+                    FileType:docs.type
+                 }) 
+               }
+               reader.readAsDataURL(docs)
+        }
+
         const create = async()=>{
           try{
             var params = {
@@ -1401,7 +1412,10 @@ export default {
 
 
        const createOrUpdate = async(action)=>{
-            // console.log(JSON.stringify(cmr.order))
+          // console.log(JSON.stringify(cmr.order))
+            cmr.order.files = files.value
+            console.log(JSON.stringify(cmr.order))
+            return
             isLoading.value = true; 
           try{
             var params = {
@@ -1413,12 +1427,17 @@ export default {
             if(response.data){
                 cmr.order = {};
                 cmr.order.goods = [];
+                cmr.isOrderEditable = true
+                cmr.isReadOnly = true
+                cmr.isSave = true
                  toast.success(response.data,{
                     timeout: 2000
                 });
                 $('.modal-backdrop').remove();
                 $('#order-form').css("display","none");
                 $('body').removeClass('modal-open');
+                $('input').attr('disabled', false);
+                $('select').attr("disabled", false); 
                 cmr.orders = await Common.getOrders()
                
               }  
@@ -1435,17 +1454,17 @@ export default {
            $('select').attr("disabled", false); 
         }
 
-    //    const selectAll =()=>{
-    //          goodIds.value = [];
-    //         if(!allGoodSelected.value){
-    //             for(var i=0; i<=cmr.cmr.order.goods.length; i++){
-    //                 goodIds.value.push(cmr.cmr.order.goods[i].index);
-    //             }
-    //         }else{
-    //            goodIds.value = []; 
-    //         }
-    //    } 
+       const editOrder = async()=>{
+           cmr.isSave = false
+           cmr.isReadOnly = false
+           $('input').attr('disabled', false);
+           $('select').attr("disabled", false); 
+       } 
 
+       const closeModal = ()=>{
+          cmr.isOrderEditable = true
+          cmr.isReadOnly = true
+       }
        const addGoods = async()=>{
             cmr.order.goods.push({})
        } 
@@ -1472,10 +1491,10 @@ export default {
           cmr,  
           baseUrl,
           isLoading,
-          isEditable,
           cities,
           partner,
           states,
+          files,
           companies,
           countries,
           orderTypes,
@@ -1497,7 +1516,9 @@ export default {
           addExpense,
           removeExpense,
           createOrUpdate,
-          uploadImage
+          uploadImage,
+          editOrder,
+          closeModal
         }
   },
 }

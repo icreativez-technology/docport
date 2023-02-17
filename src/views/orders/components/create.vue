@@ -13,7 +13,7 @@
                          <div class="tab-menu-heading">
                             <div class="tabs-menu">
                                 <ul class="nav panel-tabs">
-                                 <li><a href="#editOrder" class="active" data-toggle="tab">Edit Order</a></li>
+                                 <li><a href="#editOrder" class="active" data-toggle="tab">{{cmr.isOrderEditable ? 'Edit Order' : 'Add Order'}}</a></li>
                                  <li><a href="#cmr" data-toggle="tab">CMR</a></li>                                                        
                                </ul>
                            </div>
@@ -30,7 +30,7 @@
                                                 <div class="row">
                                                     <div class="col-md-3 feild">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" readonly :value="cmr.isOrderEditable ? cmr.order.Id : newOrderId" />
+                                                            <input type="text" class="form-control" disabled :value="cmr.isOrderEditable ? cmr.order.Id : newOrderId" />
                                                             <label class="form-control-label">ID</label>
                                                         </div>
                                                     </div>
@@ -186,7 +186,7 @@
 
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
-                                                                        <input type="time" class="form-control" v-model="cmr.order.PickupTimePromise" :disabled="cmr.order.IsConsigneeSameAsPickup ? true : false" />
+                                                                        <input type="time" class="form-control" v-model="cmr.order.PickupTime" :disabled="cmr.order.IsConsigneeSameAsPickup ? true : false" />
                                                                         <label class="form-control-label">Time</label>
                                                                     </div>
                                                                 </div>
@@ -258,7 +258,7 @@
                                                                 </div>
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
-                                                                        <input type="time" class="form-control" v-model="cmr.order.DeliveryTimePromise" :disabled="cmr.order.IsConsigneeSameAsDelivery ? true : false" />
+                                                                        <input type="time" class="form-control" v-model="cmr.order.DeliveryTime" :disabled="cmr.order.IsConsigneeSameAsDelivery ? true : false" />
                                                                         <label class="form-control-label">Time</label>
                                                                     </div>
                                                                 </div>
@@ -329,7 +329,7 @@
                                                                 </div>
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
-                                                                        <input type="time" class="form-control" v-model="cmr.order.CustomTimePromise" />
+                                                                        <input type="time" class="form-control" v-model="cmr.order.CustomTime" />
                                                                         <label class="form-control-label">Time</label>
                                                                     </div>
                                                                 </div>
@@ -948,34 +948,39 @@
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    <div class="col-md-3 feild">
+                                                                    <div class="col-md-6 feild">
                                                                         <div class="form-group">
                                                                             <input type="text" class="form-control" />
                                                                             <label class="form-control-label">6. Marks and nr</label>
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="col-md-3 feild">
+                                                                    <div class="col-md-6 feild">
                                                                         <div class="form-group">
                                                                             <input type="text" class="form-control" />
                                                                             <label class="form-control-label">7. Nr. of pages</label>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-3 feild">
+                                                                </div>
+
+                                                                <div class="col-sm-6">
+                                                                      <div class="col-md-6 feild">
                                                                         <div class="form-group">
                                                                             <input type="text" class="form-control" />
                                                                             <label class="form-control-label">8. Methods of packing</label>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-3 feild">
+                                                                    <div class="col-md-6 feild">
                                                                         <div class="form-group">
                                                                             <input type="text" class="form-control" />
                                                                             <label class="form-control-label">9. Nature of goods</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                </div>
 
-                                                                <div class="col-sm-6">
+                                                                <div class="row">
+                                                                  <div class="col-sm-12">
                                                                     <div class="col-md-4 feild">
                                                                         <div class="form-group">
                                                                             <input type="text" class="form-control" />
@@ -994,9 +999,9 @@
                                                                             <label class="form-control-label">12. Vol. (eur/Idm/m<sup>3</sup>)</label>
                                                                         </div>
                                                                     </div>
+                                                                </div>   
                                                                 </div>
-                                                            </div>
-
+                                                            
                                                             <div class="row">
                                                                 <div class="col-sm-6 md-12 lg-1">
                                                                     <div class="form-group">
@@ -1382,9 +1387,11 @@ export default {
         const uploadFiles = (docs)=>{
               const reader = new FileReader()
                reader.onload = (event) => {
+                 var fileString = event.target.result.split(',')[1] 
+                 var filee = fileString.replace(/['"]+/g, '') 
                  files.value.push({
-                    FilePath:event.target.result,
-                    FileType:docs.type
+                    file:filee,
+                    type:docs.type
                  }) 
                }
                reader.readAsDataURL(docs)
@@ -1412,11 +1419,9 @@ export default {
 
 
        const createOrUpdate = async(action)=>{
-          // console.log(JSON.stringify(cmr.order))
-            cmr.order.files = files.value
-            console.log(JSON.stringify(cmr.order))
-            return
-            isLoading.value = true; 
+        
+          cmr.order.files = files.value
+
           try{
             var params = {
               route:(action == 'create') ? 'ShippingOrder/AddOrder' : 'ShippingOrder/updateOrder',
@@ -1464,6 +1469,8 @@ export default {
        const closeModal = ()=>{
           cmr.isOrderEditable = true
           cmr.isReadOnly = true
+          $('input').attr('disabled', false);
+          $('select').attr("disabled", false);
        }
        const addGoods = async()=>{
             cmr.order.goods.push({})

@@ -663,6 +663,7 @@ pre code {
     }
 }
 
+
 .row {
     display: -ms-flexbox;
     display: flex;
@@ -34646,7 +34647,7 @@ a.dropdown-item.text-center {
 }
 
 .modal-dialog.custom {
-    max-width: 75%;
+    max-width: 85%;
 }
 h4.heading {
     top: 6px;

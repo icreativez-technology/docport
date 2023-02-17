@@ -8,7 +8,7 @@ import VueFloatLabel from "vue-float-label";
 import "vue-toastification/dist/index.css";
 import "./assets/main.css";
 
-axios.defaults.baseURL = "https://livecmr20230110004110.azurewebsites.net/api/";
+axios.defaults.baseURL = "https://cmrlive.azurewebsites.net/api/";
 
 var token = localStorage.getItem("token");
 if(token){

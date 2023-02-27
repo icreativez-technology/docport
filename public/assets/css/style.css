@@ -34764,6 +34764,10 @@ ul.pagination {
     border-color: #17d092 transparent;
     animation: lds-hourglass 1.2s infinite;
 }
+
+i.fa.fa-trash {
+    cursor: pointer !important;
+}
 /* label.active{left:5px; top:-10px; background:#fff; padding:0 5px;} */
 /* .container {
     max-width: 100% !important;

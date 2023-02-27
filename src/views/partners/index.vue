@@ -17,7 +17,7 @@
 										</div>
                     <div class="card-options">
                        Search: <input type="text" class="form-control ml-2" v-model="search" @change="changeSize">&nbsp;
-											<button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-target="#createEditPartner" data-backdrop="static" @click="addPartner"><i class="fe fe-plus mr-2"></i>add</button>
+											<button type="button" class="btn btn-app btn-success mr-2 mt-1 mb-1" data-toggle="modal" data-target="#createEditPartner" data-backdrop="static" @click="addPartner"><i class="fe fe-plus mr-2"></i>Add</button>
 										</div>
 									</div>
 									<div class="">

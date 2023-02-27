@@ -70,7 +70,7 @@
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
                                                             &nbsp;
-                                                            <button type="button" class="btn btn-app btn-purple mr-2 mt-1 mb-1" data-toggle="modal" data-backdrop="static"  @click="cmrForm" data-target="#cmrForm">CMR</button>
+                                                            <button type="button" class="btn btn-app btn-purple mr-2 mt-1 mb-1" data-toggle="modal" data-backdrop="static"  @click="cmrForm(order.ID)" data-target="#cmrForm">CMR</button>
                                                             <button type="button" class="btn btn-cyan" data-toggle="modal" data-target="#exampleModal0"><i class="fa fa-share-alt mr-2"></i></button>
                                                             &nbsp;
                                                             <a class="btn btn-app btn-gray"   @click="copyOrder(order.ID)">
@@ -198,15 +198,18 @@ export default {
           cmr.isReadOnly = false
           cmr.isSave     = false
 
-           $('input').attr('readonly', false);
+           $('input').attr('disabled', false);
            $('select').attr("disabled", false); 
 
             cmr.order = {}
             cmr.order.customerbill = {}
             cmr.order.goods = [];
+            cmr.order.files = [];
             cmr.order.profitrevenue = [];
             cmr.order.profitexpense = [];
-            cmr.order.isReadOnly = false
+            cmr.order.isReadOnly = false;
+            cmr.order.IsConsigneeSameAsPickup = false,
+            cmr.order.IsConsigneeSameAsDelivery =false
          }
 
         const show = async(id) =>{
@@ -226,13 +229,51 @@ export default {
             }
             var response = await ApiResource.get(params)
               if(response.data){
-                  cmr.order  = response.data 
-                }  
+                  getCmrVersions(id);
+                  cmr.order  = response.data
+                  cmr.cmrDetails.ShipmentOrderTypeId   = cmr.order.ShipmentOrderTypeId
+                  cmr.cmrDetails.ShipmentOrderStatusId = cmr.order.ShipmentOrderStatusId
+                  cmr.cmrDetails.SenderInfo    = cmrCompnayDetails(cmr.order.ShipperCompanyId) +", "+ cmrCountryDetails(cmr.order.ShipperCountryId) +", "+ cmr.order.ShipperAddress
+                  cmr.cmrDetails.ConsigneeInfo = cmrCompnayDetails(cmr.order.ConsigneeCompanyId) +", "+ cmrCountryDetails(cmr.order.ConsigneeCountryId) +", "+ cmr.order.ConsigneeAddress
+                  cmr.cmrDetails.CarrierInfo   = cmr.order.CustomsDescription +", "+ cmrCountryDetails(cmr.order.CustomCountryId) +", "+ cmr.order.CustomAddress
+                  cmr.cmrDetails.PlaceOfTackingOfGoods    = cmr.order.PickupAddress +", "+ cmrCountryDetails(cmr.order.PickupCountryId); 
+                  cmr.cmrDetails.PlaceOfDeliveyOfGoods  = cmr.order.DeliveryAddress +", "+cmrCountryDetails(cmr.order.DeliveryCountryId);
+               }  
               }catch(error){
                 console.log(error)
               }finally{
                  isLoading.value = false
               }
+         }
+
+         const getCmrVersions = async(id)=>{
+            try{
+            var params = {
+              route:'CMR/GetCMRVersions?ShippingOrderId='+id
+            }
+            var response = await ApiResource.getAll(params)
+              if(response.data){      
+                cmr.versions = response.data.versions
+                }  
+              }catch(error){
+                console.log(error)
+            }
+        }
+
+         const cmrCompnayDetails =(companyId)=>{
+            for(var i=0; i<cmr.companies.length; i++){
+                    if(companyId == cmr.companies[i].ID){
+                        return  cmr.companies[i].CompanyName
+                    }
+                }
+         }
+
+         const cmrCountryDetails =(countryId)=>{
+            for(var i=0; i<cmr.countries.length; i++){
+                    if(countryId == cmr.countries[i].ID){
+                        return  cmr.countries[i].Name
+                    }
+                }
          }
 
          const selectAll =()=>{
@@ -270,6 +311,7 @@ export default {
                 isLoading.value = false
               }
          }
+         
 
         const deleteOrders = async() =>{
             isLoading.value = true;
@@ -293,6 +335,26 @@ export default {
               }
          }
 
+         const cmrForm = async(id) =>{
+            isLoading.value = true;
+            $('input').attr('readonly', true);
+            $('select').attr("disabled", true);
+           
+            try{
+            var params = {
+              route:'CMR/GetCMRById?ShipmentOrderId='+id,
+              data:id
+            }
+            var response = await ApiResource.get(params)
+              if(response.data){
+                    cmr.cmrDetails = response.data
+                }  
+              }catch(error){
+                console.log(error)
+              }finally{
+                isLoading.value = false
+              }
+         }
 
          const orderByStatus = ()=>{
             for(var i=0; i<cmr.orders.length; i++){
@@ -321,7 +383,8 @@ export default {
           deleteOrders,
           changeSize,
           onPageChange,
-          orderByStatus
+          orderByStatus,
+          cmrForm
         }
     }
 }

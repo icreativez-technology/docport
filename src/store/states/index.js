@@ -4,23 +4,36 @@ const cmr = reactive({
     order:{
         goods:[],
         files:[],
+        profitrevenue:[],
+        profitexpense: [],
         customerbill:{},
         isReadOnly:true,
         IsConsigneeSameAsPickup:false,
-        IsConsigneeSameAsDelivery:false
+        IsConsigneeSameAsDelivery:false,
+        ShipmentOrderStatusId:0
     },
     versions:[],
     cmrDetails:{},
+    cmrPDFVersion:{},
+    cmrXMLVersion:{},
     companies:[],
     countries:[],
-    cities:[],
+    ShipperCities:[],
+    ConsigneeCities:[],
+    PickupCities:[],
+    DeliveryCities:[],
+    CustomCities:[],
+    CustomerCities:[],
+    CustomerBillCities:[],
     vehicles:[],
     orderTypes:[],
     orderStatus:[],
     isOrderEditable:true,
     isSave:true,
     isReadOnly:true,
-    orders:[]
+    orders:[],
+    cities:[],
+    isCMRdownload:false
 })
 
 export default cmr

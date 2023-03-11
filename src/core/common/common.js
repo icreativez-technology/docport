@@ -1,4 +1,5 @@
 import axios from "axios";
+import cmr from "../../store/states/index";
 export default {
     async getCompanies() {
         try {
@@ -98,5 +99,44 @@ export default {
             console.log(e)
             return e.response
         }
-    }
+    },
+    async getAllCities() {
+        try {
+            var response = await axios.get("Common/GetAllCities");
+            cmr.cities = response.data.common
+          } catch (e) {
+            console.log(e)
+            return e.response
+        }
+    },
+    async getCMRPDFVersion(id){
+        try{
+         var response =  await axios.get('CMR/GetCMRByVersionNo?VersionNumber='+id);
+          if(response.data){
+            cmr.cmrPDFVersion = response.data
+            var element = document.getElementById('cmrContent'); 
+            var opt = 
+            {
+            margin:       1,
+            filename:     'cmr.pdf',
+            image:        { type: 'jpeg', quality: 100 },
+            html2canvas:  { scale: 1   },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'p' }
+            };
+            html2pdf().set(opt).from(element).save();
+         }  
+         }catch(error){
+            console.log(error)
+         }
+    },
+    async getCMRXMLVersion(id){
+        try{
+         var response =  await axios.get('CMR/GetCMRInXMLByVersionNo?VersionNumber='+id);
+          if(response.data){
+            cmr.cmrXMLVersion = response.data
+         }  
+         }catch(error){
+            console.log(error)
+         }
+    }  
 }

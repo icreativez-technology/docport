@@ -10820,6 +10820,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 .text-wrap table th,
 .table-bordered td,
 .text-wrap table td {
+    color: black !important;
     border: 1px solid #e8ebf1;
 }
 
@@ -34767,6 +34768,38 @@ ul.pagination {
 
 i.fa.fa-trash {
     cursor: pointer !important;
+}
+.required{
+    color: red;
+    font-weight: bold;
+}
+div#tblCustomers td {
+    font-size: 20px !important;
+    color: black;
+}
+div#tblCustomers td input {
+    font-size: 17px !important;
+    color: black;
+}
+
+
+table.table.cmr-data td, table.cmr-data th {
+    padding: 5px !important;
+    font-size: 8px !important;
+    font-weight: bolder;
+    border-color: red !important;
+    color: red;
+}
+strong#cmr-logo {
+    border: 2px solid red;
+    padding: 10px;
+    font-size: 35px;
+    border-radius: 50%;
+    top: 7px;
+}
+span.cmr-content{
+    color: black !important;
+    font-size: 10px !important;
 }
 /* label.active{left:5px; top:-10px; background:#fff; padding:0 5px;} */
 /* .container {

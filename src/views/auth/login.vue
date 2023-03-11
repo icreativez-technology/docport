@@ -8,6 +8,9 @@
 								<div class="col-xl-12 col-md-12 col-md-12">
 									<div class="card">
 										<div class="card-body">
+											<div class="dimmer active" v-if="isLoading">
+                                            <div class="lds-hourglass"></div>
+                                           </div>
 											<div class="text-center mb-6">
 												<img :src="baseUrl+`/assets/images/brand/logo.png`" class="header-brand-img main-logo" alt="IndoUi logo">
 												<img :src="baseUrl+`/assets/images/brand/logo-light.png`" class="header-brand-img dark-main-logo" alt="IndoUi logo">
@@ -52,9 +55,11 @@ export default {
         const toast  = useToast();
         const router = useRouter();
         const token  = reactive();
+		const isLoading   = ref(false)
         const form   = reactive([]);
 		const baseUrl = ref(window.location.origin);
         const login  = async()=>{
+			isLoading.value = true;
             try{
               let response = await axios.post("Accounts/login",{
                 email:form.email,
@@ -85,9 +90,11 @@ export default {
              		 });
 				}
          
+            }finally{
+                isLoading.value = false
             }
         }
-        return {login,form,token,baseUrl}
+        return {login,form,token,baseUrl,isLoading}
     }
     
 }

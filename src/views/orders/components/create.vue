@@ -37,7 +37,7 @@
                                                     <div class="col-md-3 feild">
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" v-model="cmr.order.IndexRegister" />
-                                                            <label class="form-control-label">Index Register</label>
+                                                            <label class="form-control-label">Index Register <span class="required">*</span></label>
                                                         </div>
                                                     </div>
 
@@ -46,7 +46,7 @@
                                                             <select name="" id="" class="form-control" v-model="cmr.order.ShipmentOrderTypeId">
                                                                 <option v-for="(odrtype,index) in cmr.orderTypes" :key="index" :value="odrtype.ID">{{odrtype.Name}}</option>
                                                             </select>
-                                                            <label class="form-control-label">Type</label>
+                                                            <label class="form-control-label">Type <span class="required">*</span></label>
                                                         </div>
                                                     </div>
 
@@ -55,7 +55,7 @@
                                                             <select name="" id="" class="form-control" v-model="cmr.order.ShipmentOrderStatusId">
                                                                 <option v-for="(odrstatus,index) in cmr.orderStatus" :key="index" :value="odrstatus.ID">{{odrstatus.Name}}</option>
                                                             </select>
-                                                            <label class="form-control-label">Status</label>
+                                                            <label class="form-control-label">Status <span class="required">*</span></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -71,41 +71,41 @@
                                                             </div>
                                                             <div class="expanel-body collapse show" id="shipper">
                                                                 <div class="form-group">
-                                                                    <div class="col-md-12 feild">
-                                                                        <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.ShipperCompanyId" @change="getCompaniesInfo(cmr.order.ShipperCompanyId,'shipper')">
+                                                                    <div class="col-md- feild">
+                                                                        <select  name="shipper" class="form-control" v-model="cmr.order.ShipperCompanyId" @change="getCompaniesInfo(cmr.order.ShipperCompanyId,'shipper')">
                                                                             <option v-for="(company,index) in cmr.companies" :key="index" :value="company.ID">{{company.CompanyName}}</option>
                                                                         </select>
                                                                     </div>
                                                                     <p id="add-new-partner" data-toggle="modal" data-target="#addNewPartner" data-backdrop="static"><i class="ion-plus" data-toggle="tooltip" title="" data-original-title="ion-plus"></i></p>
-                                                                    <label class="form-control-label">Shipper</label>
+                                                                    <label class="form-control-label">Shipper <span class="required">*</span></label>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
-                                                                        <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.ShipperCountryId" @change="getCities('Shipper')">
+                                                                        <select  name="shipper" class="form-control" v-model="cmr.order.ShipperCountryId" @change="getCities('Shipper')">
                                                                             <option v-for="(country,index) in cmr.countries" :key="index" :value="country.ID">{{country.Name}}</option>
                                                                         </select>
-                                                                        <label class="form-control-label">Country</label>
+                                                                        <label class="form-control-label">Country <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                      
-                                                                        <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.ShipperCityId">
-                                                                            <option v-for="(city,index) in cmr.cities" :key="index" :value="city.ID">{{city.Name}}</option>
+                                                                        <select  name="shipper" class="form-control" v-model="cmr.order.ShipperCityId">
+                                                                            <option v-for="(city,index) in cmr.ShipperCities" :key="index" :value="city.ID">{{city.Name}}</option>
                                                                         </select>
-                                                                        <label class="form-control-label">City</label>
+                                                                        <label class="form-control-label">City <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.order.ShipperIndex" />
-                                                                        <label class="form-control-label">Index</label>
+                                                                        <label class="form-control-label">Index <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.order.ShipperAddress" />
-                                                                        <label class="form-control-label">Address</label>
+                                                                        <label class="form-control-label">Address <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -121,37 +121,37 @@
                                                             </div>
                                                             <div class="expanel-body collapse show" id="consignee">
                                                                 <div class="form-group">
-                                                                    <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.ConsigneeCompanyId" @change="getCompaniesInfo(cmr.order.ConsigneeCompanyId,'consignee')">
+                                                                    <select  name="shipper" class="form-control" v-model="cmr.order.ConsigneeCompanyId" @change="getCompaniesInfo(cmr.order.ConsigneeCompanyId,'consignee')">
                                                                         <option v-for="(company,index) in cmr.companies" :key="index" :value="company.ID">{{company.CompanyName}}</option>
                                                                     </select>
-                                                                    <label class="form-control-label">Consignee</label>
+                                                                    <label class="form-control-label">Consignee <span class="required">*</span></label>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
-                                                                        <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.ConsigneeCountryId" @click="getCities('Consignee')">
+                                                                        <select  name="shipper" class="form-control" v-model="cmr.order.ConsigneeCountryId" @click="getCities('Consignee')">
                                                                             <option v-for="(country,index) in cmr.countries" :key="index" :value="country.ID">{{country.Name}}</option>
                                                                         </select>
-                                                                        <label class="form-control-label">Country</label>
+                                                                        <label class="form-control-label">Country <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
-                                                                        <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.ConsigneeCityId">
-                                                                            <option v-for="(city,index) in cmr.cities" :key="index" :value="city.ID">{{city.Name}}</option>
+                                                                        <select  name="shipper" class="form-control" v-model="cmr.order.ConsigneeCityId">
+                                                                            <option v-for="(city,index) in cmr.ConsigneeCities" :key="index" :value="city.ID">{{city.Name}}</option>
                                                                         </select>
-                                                                        <label class="form-control-label">City</label>
+                                                                        <label class="form-control-label">City <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <input type="number" class="form-control" v-model="cmr.order.ConsigneeIndex" />
-                                                                        <label class="form-control-label">Index</label>
+                                                                        <label class="form-control-label">Index <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.order.ConsigneeAddress" />
-                                                                        <label class="form-control-label">Address</label>
+                                                                        <label class="form-control-label">Address <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -161,7 +161,7 @@
 
                                                 <div class="row seprater">
                                                     <div class="col-md-6 pickup-dilavey">
-                                                        <input type="checkbox" @click="ConsigneeSameAsPickup" v-model="cmr.order.IsConsigneeSameAsPickup" class="mt-3 mb-3" /> Check this box, if consignee is the same as pickup
+                                                        <input type="checkbox" @click="ConsigneeSameAsPickup" v-model="cmr.order.IsConsigneeSameAsPickup" class="mt-3 mb-3" /> Check this box, if shipper is the same as pickup
                                                         <div class="expanel expanel-default">
                                                             <div class="expanel-heading clearfix align-items-center">
                                                                 Pickup
@@ -174,27 +174,32 @@
                                                                     <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.PickupCompanyId" @change="getCompaniesInfo(cmr.order.PickupCompanyId,'pickup')">
                                                                         <option v-for="(company,index) in cmr.companies" :key="index" :value="company.ID">{{company.CompanyName}}</option>
                                                                     </select>
-                                                                    <label class="form-control-label">Company</label>
+                                                                    <label class="form-control-label">Company <span class="required">*</span></label>
                                                                 </div>
 
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
                                                                         <input type="date" class="form-control" v-model="cmr.order.PickupDateTime" />
-                                                                        <label class="form-control-label">Date</label>
+                                                                        <label class="form-control-label">Date <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
                                                                         <input type="time" class="form-control" v-model="cmr.order.PickupTime" />
-                                                                        <label class="form-control-label">Time</label>
+                                                                        <label class="form-control-label">Time <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
-                                                                        <input type="time" class="form-control" v-model="cmr.order.PickupTimePromise"  />
-                                                                        <label class="form-control-label">Time Promise</label>
+                                                                        <!-- <input type="time" class="form-control" v-model="cmr.order.PickupTimePromise"  /> -->
+                                                                          <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.PickupTimePromise">
+                                                                            <option  value="8:00-11:00">8:00-11:00</option>
+                                                                            <option  value="9:00-12:00">9:00-12:00</option>
+                                                                            <option  value="10:00-13:00">10:00-13:00</option>
+                                                                        </select>
+                                                                        <label class="form-control-label">Time Promise <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
 
@@ -203,32 +208,32 @@
                                                                         <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.PickupCountryId" @change="getCities('Pickup')" >
                                                                             <option v-for="(country,index) in cmr.countries" :key="index" :value="country.ID">{{country.Name}}</option>
                                                                         </select>
-                                                                        <label class="form-control-label">Country</label>
+                                                                        <label class="form-control-label">Country <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.PickupCityId" >
-                                                                            <option v-for="(city,index) in cmr.cities" :key="index" :value="city.ID">{{city.Name}}</option>
+                                                                            <option v-for="(city,index) in cmr.PickupCities" :key="index" :value="city.ID">{{city.Name}}</option>
                                                                         </select>
-                                                                        <label class="form-control-label">City</label>
+                                                                        <label class="form-control-label">City <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <input type="number" class="form-control" v-model="cmr.order.PickupIndex"  />
-                                                                        <label class="form-control-label">Index</label>
+                                                                        <label class="form-control-label">Index <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.order.PickupAddress"  />
-                                                                        <label class="form-control-label">Address</label>
+                                                                        <label class="form-control-label">Address <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <input type="text" class="form-control" v-model="cmr.order.PickupComment"  />
-                                                                    <label class="form-control-label">Comment</label>
+                                                                    <label class="form-control-label">Comment <span class="required">*</span></label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -247,25 +252,30 @@
                                                                     <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.DeliveryCompanyId" @change="getCompaniesInfo(cmr.order.DeliveryCompanyId,'delivery')">
                                                                         <option v-for="(company,index) in cmr.companies" :key="index" :value="company.ID">{{company.CompanyName}}</option>
                                                                     </select>
-                                                                    <label class="form-control-label">Company</label>
+                                                                    <label class="form-control-label">Company <span class="required">*</span></label>
                                                                 </div>
 
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
                                                                         <input type="date" class="form-control" v-model="cmr.order.DeliveryDateTime"  />
-                                                                        <label class="form-control-label">Date</label>
+                                                                        <label class="form-control-label">Date <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
                                                                         <input type="time" class="form-control" v-model="cmr.order.DeliveryTime"  />
-                                                                        <label class="form-control-label">Time</label>
+                                                                        <label class="form-control-label">Time <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
-                                                                        <input type="time" class="form-control" v-model="cmr.order.DeliveryTimePromise"  />
-                                                                        <label class="form-control-label">Time Promise</label>
+                                                                        <!-- <input type="time" class="form-control" v-model="cmr.order.DeliveryTimePromise"  /> -->
+                                                                         <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.DeliveryTimePromise">
+                                                                            <option  value="8:00-11:00">8:00-11:00</option>
+                                                                            <option  value="9:00-12:00">9:00-12:00</option>
+                                                                            <option  value="10:00-13:00">10:00-13:00</option>
+                                                                        </select>
+                                                                        <label class="form-control-label">Time Promise <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
 
@@ -274,32 +284,32 @@
                                                                         <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.DeliveryCountryId" @change="getCities('Delivery')" >
                                                                             <option v-for="(country,index) in cmr.countries" :key="index" :value="country.ID">{{country.Name}}</option>
                                                                         </select>
-                                                                        <label class="form-control-label">Country</label>
+                                                                        <label class="form-control-label">Country <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.DeliveryCityId" >
-                                                                            <option v-for="(city,index) in cmr.cities" :key="index" :value="city.ID">{{city.Name}}</option>
+                                                                            <option v-for="(city,index) in cmr.DeliveryCities" :key="index" :value="city.ID">{{city.Name}}</option>
                                                                         </select>
-                                                                        <label class="form-control-label">City</label>
+                                                                        <label class="form-control-label">City <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <input type="number" class="form-control" v-model="cmr.order.DeliveryIndex"  />
-                                                                        <label class="form-control-label">Index</label>
+                                                                        <label class="form-control-label">Index <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3 feild">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.order.DeliveryAddress"  />
-                                                                        <label class="form-control-label">Address</label>
+                                                                        <label class="form-control-label">Address <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <input type="text" class="form-control" v-model="cmr.order.DeliveryComment"  />
-                                                                    <label class="form-control-label">Comment</label>
+                                                                    <label class="form-control-label">Comment <span class="required">*</span></label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -321,13 +331,21 @@
                                                                     <label class="form-control-label">Customs</label>
                                                                 </div>
 
-                                                                <div class="col-md-4 feild">
+                                                                <div class="col-md-6 feild">
                                                                     <div class="form-group">
                                                                         <input type="date" class="form-control" v-model="cmr.order.CustomDateTime" />
                                                                         <label class="form-control-label">Date</label>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-4 feild">
+                                                                 <div class="col-md-6 feild">
+                                                                    <div class="form-group">
+                                                                        <select  name="shipper" class="form-control" v-model="cmr.order.CustomCountryId" @change="getCities('Custom')">
+                                                                            <option v-for="(country,index) in cmr.countries" :key="index" :value="country.ID">{{country.Name}}</option>
+                                                                        </select>
+                                                                        <label class="form-control-label">Country</label>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="col-md-4 feild">
                                                                     <div class="form-group">
                                                                         <input type="time" class="form-control" v-model="cmr.order.CustomTime" />
                                                                         <label class="form-control-label">Time</label>
@@ -338,30 +356,23 @@
                                                                         <input type="time" class="form-control" v-model="cmr.order.CustomTimePromise" />
                                                                         <label class="form-control-label">Time Promise</label>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-3 feild">
+                                                                </div> -->
+                                            
+                                                                <div class="col-md-4 feild">
                                                                     <div class="form-group">
-                                                                        <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.CustomCountryId" @change="getCities('Custom')">
-                                                                            <option v-for="(country,index) in cmr.countries" :key="index" :value="country.ID">{{country.Name}}</option>
-                                                                        </select>
-                                                                        <label class="form-control-label">Country</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3 feild">
-                                                                    <div class="form-group">
-                                                                        <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.CustomCityId">
-                                                                            <option v-for="(city,index) in cmr.cities" :key="index" :value="city.ID">{{city.Name}}</option>
+                                                                        <select name="shipper" class="form-control" v-model="cmr.order.CustomCityId">
+                                                                            <option v-for="(city,index) in cmr.CustomCities" :key="index" :value="city.ID">{{city.Name}}</option>
                                                                         </select>
                                                                         <label class="form-control-label">City</label>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-3 feild">
+                                                                <div class="col-md-4 feild">
                                                                     <div class="form-group">
                                                                         <input type="number" class="form-control" v-model="cmr.order.CustomIndex" />
                                                                         <label class="form-control-label">Index</label>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-3 feild">
+                                                                <div class="col-md-4 feild">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.order.CustomAddress" />
                                                                         <label class="form-control-label">Address</label>
@@ -420,7 +431,7 @@
                                                                 </div>
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
-                                                                    <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.MasterCompanyId">
+                                                                    <select  name="shipper" class="form-control" v-model="cmr.order.MasterCompanyId">
                                                                         <option v-for="(company,index) in cmr.companies" :key="index" :value="company.ID">{{company.CompanyName}}</option>
                                                                     </select>
                                                                         <label class="form-control-label">Choose Carrier</label>
@@ -432,7 +443,7 @@
                                                                     <select name="" id="" class="form-control" v-model="cmr.order.MasterVehicleTypeId">
                                                                         <option v-for="(vtype,index) in cmr.vehicles_types" :key="index" :value="vtype.ID">{{vtype.Name}}</option>
                                                                     </select>
-                                                                        <label class="form-control-label">Master Vehcile Type</label>
+                                                                        <label class="form-control-label">Master Vehicle Type</label>
                                                                     </div>
                                                                 </div>
 
@@ -475,7 +486,7 @@
                                                                 <div class="col-md-4 feild">
                                                                     <div class="form-group">
                                                                         <input type="date" class="form-control" v-model="cmr.order.MasterDelivaryDate"/>
-                                                                        <label class="form-control-label">Delivary Date</label>
+                                                                        <label class="form-control-label">Delivery Date</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -490,7 +501,7 @@
                                                                 <div class="tabs-menu">
                                                                     <!-- Tabs -->
                                                                     <ul class="nav panel-tabs">
-                                                                        <li><a href="#good" class="active" data-toggle="tab">Good</a></li>
+                                                                        <li><a href="#good" class="active" data-toggle="tab">Goods</a></li>
                                                                         <li><a href="#cmrVersions" data-toggle="tab">CMR Versions</a></li>
                                                                         <li><a href="#profit" data-toggle="tab">Profit</a></li>
                                                                         <li><a href="#files" data-toggle="tab">Files</a></li>
@@ -595,14 +606,14 @@
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
-                                                                                                    <tr v-if="cmr.versions != null" v-for="(version) in cmr.versions">
+                                                                                                    <tr v-if="cmr.cmrDetails.versions != null" v-for="(version) in cmr.cmrDetails.versions">
                                                                                                         <!-- <td><input type="checkbox" name="" id="" /></td> -->
                                                                                                         <td>{{ version.Id }}</td>
                                                                                                         <td>{{ version.Version }}</td>
                                                                                                         <td>{{ version.Date }}</td>
                                                                                                         <td>{{ version.Time }}</td>
                                                                                                         <td>{{ version.CreatedBy }}</td>
-                                                                                                        <td><a href="#" class="btn btn-success">Download</a></td>
+                                                                                                        <td><a href="#" class="btn btn-success" @click="getPDFVersion(version.Id)">pdf</a> &nbsp; &nbsp; <router-link :to="{name:'admin.orders.cmr.xml'}" target="__blank" class="btn btn-success" @click="getXMLVersion(version.Id)">xml</router-link> </td>
                                                                                                         <td><i class="fa fa-trash" aria-hidden="true"></i></td>
                                                                                                     </tr>
                                                                                                     <tr v-else>
@@ -699,37 +710,37 @@
                                                                     </div>
                                                                     <div class="tab-pane" id="files">
                                                                         <div class="row">
-                                                                            <div class="col-sm-6">
+                                                                            <div class="col-sm-12">
                                                                                 <div class="form-group">
                                                                                     <div class="custom-file">
                                                                                         <input type="file" class="form-control" ref="file" multiple :disabled="cmr.isReadOnly ? true : false" @change="uploadImage"/>
                                                                                         <label class="">Upload file</label>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="col-sm-6">
-                                                                                <h5>Uploaded Files</h5>
+
                                                                                 <div class="table-responsive">
                                                                                             <table class="table table-striped table-bordered text-nowrap w-100 text-center">
                                                                                                 <thead>
-                                                                                                    <tr>
-                                                                                                        <th>Type</th>
-                                                                                                        <th>Download</th>
-                                                                                                        <th>Action</th>
-                                                                                                    </tr>
+                                                                                                <tr>
+                                                                                                    <th>File Name</th>
+                                                                                                    <th>Date / Time</th>
+                                                                                                    <th>Type</th>
+                                                                                                    <th>Actions</th>
+                                                                                                </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
-                                                                                                    <tr v-if="cmr.order.files != ''" v-for="(docs,index) in cmr.order.files" :key="index">
-                                                                                                        <td>{{docs.type}}</td>
-                                                                                                        <td><a :href="docs.file" aria-disabled="true" target="__blank" class="btn btn-success">Download</a></td>
-                                                                                                        <td><i class="fa fa-trash" aria-hidden="true" @click="removeFiles(index)"></i></td>
-                                                                                                    </tr>
-                                                                                                    <tr v-else>
-                                                                                                        <td colspan="3">No Files Uploaded Yet</td>
-                                                                                                    </tr>
+                                                                                            <tr v-if="cmr.order.files != ''" v-for="(docs,index) in cmr.order.files" :key="index">
+                                                                                                <td>{{docs.name ? docs.name : docs.file}}</td>
+                                                                                                <td>{{docs.Date}} / {{ docs.Time }}</td>
+                                                                                                <td>{{docs.type}}</td>
+                                                                                                <td><i class="fa fa-trash" aria-hidden="true" @click="removeFiles(index)"></i></td>
+                                                                                            </tr>
+                                                                                            <tr v-else>
+                                                                                                <td colspan="4">No Files Uploaded Yet</td>
+                                                                                            </tr>
                                                                                                 </tbody>
                                                                                             </table>
-                                                                                        </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -749,7 +760,7 @@
 
                                                                                             <div class="col-md-3 feild">
                                                                                                 <div class="form-group">
-                                                                                                    <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.customerbill.CustomerCountryId" @change="getCities">
+                                                                                                    <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.customerbill.CustomerCountryId" @change="getCities('Customer')">
                                                                                                         <option v-for="(country,index) in cmr.countries" :key="index" :value="country.ID">{{country.Name}}</option>
                                                                                                     </select>
                                                                                                     <label class="form-control-label">Country</label>
@@ -758,7 +769,7 @@
                                                                                             <div class="col-md-3 feild">
                                                                                                 <div class="form-group">
                                                                                                     <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.customerbill.CustomerCityId">
-                                                                                                        <option v-for="(city,index) in cmr.cities" :key="index" :value="city.ID">{{city.Name}}</option>
+                                                                                                        <option v-for="(city,index) in cmr.CustomerCities" :key="index" :value="city.ID">{{city.Name}}</option>
                                                                                                     </select>
                                                                                                     <label class="form-control-label">City</label>
                                                                                                 </div>
@@ -809,7 +820,7 @@
                                                                                             </div>
                                                                                             <div class="col-md-3 feild">
                                                                                                 <div class="form-group">
-                                                                                                    <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.customerbill.BillToCountryId" @change="getCities">
+                                                                                                    <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.customerbill.BillToCountryId" @change="getCities('Bill')">
                                                                                                         <option v-for="(country,index) in cmr.countries" :key="index" :value="country.ID">{{country.Name}}</option>
                                                                                                     </select>
                                                                                                     <label class="form-control-label">Country</label>
@@ -818,7 +829,7 @@
                                                                                             <div class="col-md-3 feild">
                                                                                                 <div class="form-group">
                                                                                                     <select id="shipper" name="shipper" class="form-control" v-model="cmr.order.customerbill.BillToCityId">
-                                                                                                        <option v-for="(city,index) in cmr.cities" :key="index" :value="city.ID">{{city.Name}}</option>
+                                                                                                        <option v-for="(city,index) in cmr.CustomerBillCities" :key="index" :value="city.ID">{{city.Name}}</option>
                                                                                                     </select>
                                                                                                     <label class="form-control-label">City</label>
                                                                                                 </div>
@@ -887,7 +898,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-2 lg-2 feild">
                                                                     <div class="form-group">
-                                                                        <input type="text" class="form-control" readonly v-model="cmr.order.Id"/>
+                                                                        <input type="text" class="form-control" readonly v-model="cmr.cmrDetails.ShipmentOrderId"/>
                                                                         <label class="form-control-label">ID</label>
                                                                     </div>
                                                                 </div>
@@ -895,14 +906,14 @@
                                                                 <div class="col-md-2 lg-2 feild">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.cmrDetails.VersionNr"/>
-                                                                        <label class="form-control-label">Version nr</label>
+                                                                        <label class="form-control-label">Version nr </label>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-2 lg-2 feild">
                                                                     <div class="form-group">
-                                                                        <input type="number" min="0" class="form-control" v-model="cmr.cmrDetails.IndexRegister"/>
-                                                                        <label class="form-control-label">Index Register</label>
+                                                                        <input type="text" min="0" class="form-control" v-model="cmr.cmrDetails.IndexRegister"/>
+                                                                        <label class="form-control-label">Index Register <span class="required">*</span></label>
                                                                     </div>
                                                                 </div>
 
@@ -911,7 +922,7 @@
                                                                             <select name="" id="" class="form-control" v-model="cmr.cmrDetails.ShipmentOrderTypeId">
                                                                                 <option v-for="(odrtype,index) in cmr.orderTypes" :key="index" :value="odrtype.ID">{{odrtype.Name}}</option>
                                                                             </select>
-                                                                            <label class="form-control-label">Type</label>
+                                                                            <label class="form-control-label">Type <span class="required">*</span></label>
                                                                         </div>
                                                                     </div>
 
@@ -920,7 +931,7 @@
                                                                             <select name="" id="" class="form-control" v-model="cmr.cmrDetails.ShipmentOrderStatusId">
                                                                                 <option v-for="(odrstatus,index) in cmr.orderStatus" :key="index" :value="odrstatus.ID">{{odrstatus.Name}}</option>
                                                                             </select>
-                                                                            <label class="form-control-label">Status</label>
+                                                                            <label class="form-control-label">Status <span class="required">*</span></label>
                                                                         </div>
                                                                     </div>
 
@@ -929,22 +940,22 @@
                                                                 <div class="col-sm-6 md-12 lg-1">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.cmrDetails.SenderInfo"/>
-                                                                        <label class="form-control-label">1. Sender (name,address,country)</label>
+                                                                        <label class="form-control-label">1. Sender (name,address,country) <span class="required">*</span></label>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.cmrDetails.ConsigneeInfo"/>
-                                                                        <label class="form-control-label">2. Consignee (name,address,country)</label>
+                                                                        <label class="form-control-label">2. Consignee (name,address,country) <span class="required">*</span></label>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.cmrDetails.PlaceOfDeliveyOfGoods"/>
-                                                                        <label class="form-control-label">3. Place of delivey of the goods (address,country)</label>
+                                                                        <label class="form-control-label">3. Place of delivery of the goods (address,country) <span class="required">*</span></label>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.cmrDetails.PlaceOfTackingOfGoods"/>
-                                                                        <label class="form-control-label">4. Place of tacking of the goods (address,country)</label>
+                                                                        <label class="form-control-label">4. Place of taking over the goods (address,country) <span class="required">*</span></label>
                                                                     </div>
 
                                                                     <div class="form-group">
@@ -956,7 +967,7 @@
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
                                                                         <h3><strong>INTERNATIONAL CONSIGNMENT NOTE</strong></h3>
-                                                                        <p><b>This carriage is subject, notwithstanding any clause to the contrary, to the Convention on the Contract of the International Carriage of Goods by Road (CMR)</b></p>
+                                                                        <p><b>This carriage is subject, notwithstanding any clause to the contrary, to the Convention on the Contract of the International Carriage of Goods by Road (CMR)</b></p>                                                                     
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -972,7 +983,7 @@
                                                                     <div class="col-md-6 feild">
                                                                         <div class="form-group">
                                                                             <input type="text" class="form-control" v-model="cmr.cmrDetails.NrOfPages" />
-                                                                            <label class="form-control-label">7. Nr. of pages</label>
+                                                                            <label class="form-control-label">7. Nr. of packages</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1030,12 +1041,12 @@
 
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.cmrDetails.SuccessiveCarrirerInfo" />
-                                                                        <label class="form-control-label">15. Successive carrirer (name,address,country)</label>
+                                                                        <label class="form-control-label">15. Successive carrier (name,address,country)</label>
                                                                     </div>
 
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" v-model="cmr.cmrDetails.PlaceOfTackingOfGoods"/>
-                                                                        <label class="form-control-label">16. Place of tacking of the goods (address,country)</label>
+                                                                        <label class="form-control-label">16. Place of  taking over the goods (address,country)</label>
                                                                     </div>
                                                                 </div>
 
@@ -1050,43 +1061,38 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Carriage charges</td>
-                                                                                <td><input type="number" class="form-control"   v-model="cmr.cmrDetails.CarriageCharges"/></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.CarriageCurrency" /></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.CarriageConsignee"/></td>
+                                                                                <td><input type="number" minlength="0" class="form-control"   v-model="cmr.cmrDetails.CarriageCharges"/></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.CarriageCurrency" /></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.CarriageConsignee"/></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Deduction</td>
-                                                                                <td><input type="number" class="form-control"   v-model="cmr.cmrDetails.DeductionCharges"/></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.DeductionCurrency"/></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.DeductionConsignee"/></td>
+                                                                                <td><input type="number"  minlength="0" class="form-control"   v-model="cmr.cmrDetails.DeductionCharges"/></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.DeductionCurrency"/></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.DeductionConsignee"/></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Balance</td>
-                                                                                <td><input type="number" class="form-control"   v-model="cmr.cmrDetails.BalanceCharges" /></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.BalanceCurrency" /></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.BalanceConsignee" /></td>
+                                                                                <td><input type="number"  minlength="0" class="form-control"   v-model="cmr.cmrDetails.BalanceCharges" /></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.BalanceCurrency" /></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.BalanceConsignee" /></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Supplier charges</td>
-                                                                                <td><input type="number" class="form-control"   v-model="cmr.cmrDetails.SupplierCharges"/></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.SupplierCurrency"/></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.SupplierConsignee"/></td>
+                                                                                <td><input type="number"  minlength="0" class="form-control"   v-model="cmr.cmrDetails.SupplierCharges"/></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.SupplierCurrency"/></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.SupplierConsignee"/></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Other</td>
-                                                                                <td><input type="number" class="form-control"   v-model="cmr.cmrDetails.OtherCharges"/></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.OtherCurrency"/></td>
-                                                                                <td><input type="text" class="form-control"   v-model="cmr.cmrDetails.OtherConsignee"/></td>
+                                                                                <td><input type="number"  minlength="0" class="form-control"   v-model="cmr.cmrDetails.OtherCharges"/></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.OtherCurrency"/></td>
+                                                                                <td><input type="text" class="form-control"     v-model="cmr.cmrDetails.OtherConsignee"/></td>
                                                                             </tr>
                                                                         </table>
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
-
-
-
 
 
                                                             <div class="row">
@@ -1095,8 +1101,9 @@
                                                                         <div class="tab-menu-heading">
                                                                             <div class="tabs-menu">
                                                                                 <ul class="nav panel-tabs">
-                                                                                    <li><a href="#good-cmr" class="active" data-toggle="tab">Good</a></li>
-                                                                                    <li><a href="#cmrVersions2" data-toggle="tab">CMR Versions</a></li>                               
+                                                                                    <li><a href="#good-cmr" class="active" data-toggle="tab">Goods</a></li>
+                                                                                    <li><a href="#cmrVersions2" data-toggle="tab">CMR Versions</a></li> 
+                                                                                    <li><a href="#tab25" data-toggle="tab">Files</a></li>                              
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
@@ -1105,7 +1112,7 @@
                                                                                 <div class="tab-pane active" id="good-cmr">
                                                                                     <div class="table-responsive">
                                                                                              <table id="example" class="table table-striped table-bcmr.ordered text-nowrap w-100 dataTable no-footer" role="grid" aria-describedby="example_info">
-                                                                                <thead>
+                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th>
                                                                                             <input type="checkbox" name="" id="" > &nbsp; <i class="fa fa-ban" data-toggle="tooltip" @click="clearGoods" data-original-title="fa fa-ban"></i> &nbsp;
@@ -1152,9 +1159,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="tab-pane" id="cmrVersions2">
-                                                                                    <div class="table-responsive">
-                                                                                     
-                                                                                                                                                 
+                                                                                    <div class="table-responsive">                                                            
                                                                                         <table class="table card-table table-vcenter text-nowrap">
                                                                                                 <thead>
                                                                                                     <tr>
@@ -1169,14 +1174,14 @@
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
-                                                                                                    <tr v-if="cmr.versions != null" v-for="(version) in cmr.versions">
+                                                                                                    <tr v-if="cmr.cmrDetails.versions != null" v-for="(version) in cmr.cmrDetails.versions">
                                                                                                         <!-- <td><input type="checkbox" name="" id="" /></td> -->
                                                                                                         <td>{{ version.Id }}</td>
                                                                                                         <td>{{ version.Version }}</td>
                                                                                                         <td>{{ version.Date }}</td>
                                                                                                         <td>{{ version.Time }}</td>
                                                                                                         <td>{{ version.CreatedBy }}</td>
-                                                                                                        <td><a href="#" class="btn btn-success">Download</a></td>
+                                                                                                        <td><a href="#" class="btn btn-success" @click="getPDFVersion(version.Id)">pdf</a> &nbsp; &nbsp; <router-link :to="{name:'admin.orders.cmr.xml'}" target="__blank" class="btn btn-success" @click="getXMLVersion(version.Id)">xml</router-link> </td>
                                                                                                         <td><i class="fa fa-trash" aria-hidden="true"></i></td>
                                                                                                     </tr>
                                                                                                     <tr v-else>
@@ -1188,72 +1193,36 @@
 
                                                                                     </div>
                                                                                 </div>
-
-                                                                                <div class="tab-pane" id="profit-cmr">
-                                                                                    <button type="button" class="btn btn-default pb-2"><i class="fe fe-plus mr-2"></i>Add</button>
-                                                                                    <p><strong>Revenue</strong></p>
-                                                                                    <table class="table card-table table-vcenter text-nowrap align-items-center">
-                                                                                        <thead class="thead-light">
+                                                                                <div class="tab-pane" id="tab25">
+                                                                                    <div class="table-responsive">
+                                                                                    <table class="table table-striped table-bordered text-nowrap w-100 text-center">
+                                                                                        <thead>
                                                                                             <tr>
-                                                                                                <th>Code / Price</th>
-                                                                                                <th>Qty / Sum</th>
-                                                                                                <th>Valuuta Summa (EUR)</th>
-                                                                                                <th>Description Date</th>
-                                                                                                <th>Carrier Country</th>
-                                                                                                <th>Transport Invoice</th>
-                                                                                                <th>Action</th>
+                                                                                                <th>File Name</th>
+                                                                                                <th>Date / Time</th>
+                                                                                                <th>Type</th>
+                                                                                                <th>Actions</th>
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
-                                                                                            <tr>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td>
-                                                                                                    <a class="btn btn-app btn-success"> <i class="fa fa-trash"></i></a>
-                                                                                                </td>
+                                                                                            <tr v-if="cmr.cmrDetails.files != ''" v-for="(docs,index) in cmr.cmrDetails.files" :key="index">
+                                                                                                <td>{{docs.file}}</td>
+                                                                                                <td>{{docs.Date}} / {{ docs.Time }}</td>
+                                                                                                <td>{{docs.type}}</td>
+                                                                                                <td><i class="fa fa-trash" aria-hidden="true" @click="removeCMRFiles(index)"></i></td>
+                                                                                            </tr>
+                                                                                            <tr v-else>
+                                                                                                <td colspan="4">No Files Uploaded Yet</td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                     </table>
-                                                                                    <hr />
-                                                                                    <button type="button" class="btn btn-default pb-2"><i class="fe fe-plus mr-2"></i>Add</button>
-                                                                                    <p><strong>Expense</strong></p>
-                                                                                    <table class="table card-table table-vcenter text-nowrap align-items-center">
-                                                                                        <thead class="thead-light">
-                                                                                            <tr>
-                                                                                                <th>Code / Price</th>
-                                                                                                <th>Qty / Sum</th>
-                                                                                                <th>Valuuta Summa (EUR)</th>
-                                                                                                <th>Description Date</th>
-                                                                                                <th>Carrier Country</th>
-                                                                                                <th>Transport Invoice</th>
-                                                                                                <th>Action</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td><input type="text" class="form-control" /></td>
-                                                                                                <td>
-                                                                                                    <a class="btn btn-app btn-success"> <i class="fa fa-trash"></i></a>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
+                                                                        </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-
 
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
@@ -1328,6 +1297,9 @@
             </div>
         </div>
     </div>
+    <div v-show="cmr.isCMRdownload">
+        <redCMR/>
+    </div> 
 </template>
 
 <script>
@@ -1338,8 +1310,9 @@ import {onMounted} from "vue";
 import { useToast } from "vue-toastification";
 import cmr from "../../../store/states/index";
 import axios from "axios";
+import redCMR from './pdf/redcmr.vue';
 export default {  
-  components:{Common,ApiResource},
+  components:{Common,ApiResource,redCMR},
   setup() {
         const toast = useToast();
         const isLoading   = ref(false)
@@ -1364,24 +1337,29 @@ export default {
           cmr.orderStatus    = await Common.getOrderStatus();
           cmr.vehicles_types = await Common.getVehicleTypes();
           cmr.vehicles       = await Common.getVehicles();
-          cmr.cities = await Common.getCities(1)  
+         // cmr.cities         = await Common.getCities(1)  
           newOrderId.value   = await Common.getGetNextOrderId();
         })  
+
         const getStates = async(id)=>{
             states.value = await Common.getStates(id)
         }
 
         const getCities = async(feild)=>{
             if(feild == 'Shipper'){
-             cmr.cities = await Common.getCities(cmr.order.ShipperCountryId)
+              cmr.ShipperCities = await Common.getCities(cmr.order.ShipperCountryId)
             }else if(feild == 'Consignee'){
-              cmr.cities = await Common.getCities(cmr.order.ConsigneeCountryId)  
+              cmr.ConsigneeCities = await Common.getCities(cmr.order.ConsigneeCountryId)  
             }else if(feild == 'Pickup'){
-              cmr.cities = await Common.getCities(cmr.order.PickupCountryId)  
+              cmr.PickupCities = await Common.getCities(cmr.order.PickupCountryId)  
             }else if(feild == 'Delivery'){
-              cmr.cities = await Common.getCities(cmr.order.DeliveryCountryId)  
+              cmr.DeliveryCities = await Common.getCities(cmr.order.DeliveryCountryId)  
             }else if(feild == 'Custom'){
-              cmr.cities = await Common.getCities(cmr.order.CustomCountryId)  
+              cmr.CustomCities = await Common.getCities(cmr.order.CustomCountryId)  
+            }else if(feild == 'Customer'){
+              cmr.CustomerCities = await Common.getCities(cmr.order.customerbill.CustomerCountryId)  
+            }else if(feild == 'Bill'){
+              cmr.CustomerBillCities = await Common.getCities(cmr.order.customerbill.BillToCountryId)  
             }
         }
 
@@ -1401,7 +1379,8 @@ export default {
                  const filee = fileString.replaceAll('"', '');
                  cmr.order.files.push({
                     file:filee,
-                    type:fileType
+                    type:fileType,
+                    name:docs.name
                  })
                }
 
@@ -1503,7 +1482,8 @@ export default {
 
 
        const createOrUpdate = async(action)=>{
-  
+
+          cmr.order.CustomIndex  = Number(cmr.order.CustomIndex)
           isLoading.value = true;  
           try{
             var params = {
@@ -1511,34 +1491,70 @@ export default {
               data:cmr.order
             }
             var response = (action == 'create') ? await ApiResource.store(params) : await ApiResource.update(params)
-            if(response.data){
-                cmr.order = {};
-                cmr.order.goods = [];
+            if(response.data.status != 400){
+                console.log(response.data)
                 cmr.isOrderEditable = true
                 cmr.isReadOnly = true
                 cmr.isSave = true
                  toast.success(response.data,{
                     timeout: 2000
                 });
-                $('.modal-backdrop').remove();
-                $('#order-form').css("display","none");
-                $('body').removeClass('modal-open');
-                $('input').attr('disabled', false);
-                $('select').attr("disabled", false); 
+
+                $('input').attr('disabled', true);
+                $('select').attr("disabled", true); 
                 cmr.orders = await Common.getOrders()
+                cmr.order.Id                         = newOrderId.value
+                cmr.cmrDetails.ShipmentOrderId       = newOrderId.value
+                cmr.cmrDetails.IndexRegister         = cmr.order.IndexRegister
+                cmr.cmrDetails.ShipmentOrderTypeId   = cmr.order.ShipmentOrderTypeId
+                cmr.cmrDetails.ShipmentOrderStatusId = cmr.order.ShipmentOrderStatusId
+                cmr.cmrDetails.SenderInfo    = cmrCompnayDetails(cmr.order.ShipperCompanyId) +", "+ cmrCountryDetails(cmr.order.ShipperCountryId) +", "+ cmr.order.ShipperAddress
+                cmr.cmrDetails.ConsigneeInfo = cmrCompnayDetails(cmr.order.ConsigneeCompanyId) +", "+ cmrCountryDetails(cmr.order.ConsigneeCountryId) +", "+ cmr.order.ConsigneeAddress
+                cmr.cmrDetails.CarrierInfo   = cmr.order.CustomsDescription +", "+ cmrCountryDetails(cmr.order.CustomCountryId) +", "+ cmr.order.CustomAddress
+                cmr.cmrDetails.PlaceOfTackingOfGoods    = cmr.order.PickupAddress +", "+ cmrCountryDetails(cmr.order.PickupCountryId); 
+                cmr.cmrDetails.PlaceOfDeliveyOfGoods  = cmr.order.DeliveryAddress +", "+cmrCountryDetails(cmr.order.DeliveryCountryId);
                
+              }else{
+                toast.error("Please fill all required fields ",{
+                    timeout: 2000
+                });
               }  
               }catch(error){
-                console.log(error)
+                toast.error(error,{
+                    timeout: 2000
+                });
               }finally{
                 isLoading.value = false
               }
         }
 
+            const cmrCompnayDetails =(companyId)=>{
+            for(var i=0; i<cmr.companies.length; i++){
+                    if(companyId == cmr.companies[i].ID){
+                        return  cmr.companies[i].CompanyName
+                    }
+                }
+         }
+
+         const cmrCountryDetails =(countryId)=>{
+            for(var i=0; i<cmr.countries.length; i++){
+                    if(countryId == cmr.countries[i].ID){
+                        return  cmr.countries[i].Name
+                    }
+                }
+         }
+
         const createCMR = async()=>{
-            
+          
+          cmr.cmrDetails.CarriageCharges = Number(cmr.cmrDetails.CarriageCharges) 
+          cmr.cmrDetails.DeductionCharges = Number(cmr.cmrDetails.DeductionCharges)
+          cmr.cmrDetails.BalanceCharges = Number(cmr.cmrDetails.BalanceCharges)
+          cmr.cmrDetails.SupplierCharges = Number(cmr.cmrDetails.SupplierCharges)
+          cmr.cmrDetails.OtherCharges = Number(cmr.cmrDetails.OtherCharges)
+
           cmr.cmrDetails.ShipmentOrderId = cmr.order.Id  
           cmr.cmrDetails.goods           = cmr.order.goods   
+
           isLoading.value = true;  
           try{
             var params = {
@@ -1547,20 +1563,14 @@ export default {
             }
             var response = await ApiResource.store(params)
             if(response.data){
-                cmr.cmrDetails = {};
-                cmr.cmrDetails.goods = [];
                 cmr.isReadOnly = true
                 cmr.isSave = true
-                 toast.success(response.data,{
+                cmr.cmrDetails.versions = response.data.versions
+                 toast.success(response.data.Status.Description,{
                     timeout: 2000
                 });
-                $('.modal-backdrop').remove();
-                $('#order-form').css("display","none");
-                $('body').removeClass('modal-open');
-                $('input').attr('disabled', false);
-                $('select').attr("disabled", false); 
-                cmr.orders = await Common.getOrders()
-               
+                $('input').attr('disabled', true);
+                $('select').attr("disabled", true);                
               }  
               }catch(error){
                 console.log(error)
@@ -1568,6 +1578,13 @@ export default {
                 isLoading.value = false
               }
         }
+
+        const getPDFVersion = async(id)=>{
+            await Common.getCMRPDFVersion(id)
+        } 
+        const getXMLVersion = async(id)=>{
+            await Common.getCMRXMLVersion(id)
+        }    
 
        const editOrder = async()=>{
            cmr.isSave = false
@@ -1581,6 +1598,14 @@ export default {
           cmr.isReadOnly = true
           $('input').attr('disabled', false);
           $('select').attr("disabled", false);
+          cmr.order = {}
+          cmr.order.customerbill = {}
+          cmr.order.goods = [];
+          cmr.order.files = [];
+          cmr.cmrDetails = {}
+          cmr.order.isReadOnly = false;
+          cmr.order.IsConsigneeSameAsPickup = false,
+          cmr.order.IsConsigneeSameAsDelivery =false
        }
        const addGoods = async(states)=>{
             (states == 'order') ? cmr.order.goods.push({}) : cmr.cmrDetails.goods.push({})
@@ -1605,7 +1630,10 @@ export default {
        } 
        const removeFiles = async(index)=>{
             cmr.order.files.splice(index,1)
-       } 
+       }
+       const removeCMRFiles = async(index)=>{
+            cmr.cmrDetails.files.splice(index,1)
+       }  
 
         return{
           cmr,  
@@ -1635,7 +1663,10 @@ export default {
           removeFiles,
           createCMR,
           ConsigneeSameAsPickup,
-          ConsigneeSameAsDelivery
+          ConsigneeSameAsDelivery,
+          removeCMRFiles,
+          getPDFVersion,
+          getXMLVersion
         }
   },
 }

@@ -18,6 +18,8 @@ const admin ={
   },
   orders: {
     index: () => import('../views/orders/index.vue'),
+    cmrpdf: () => import('../views/orders/components/pdf/redcmr.vue'),
+    cmrxml: () => import('../views/orders/components/xml/xml.vue'),
     master: () => import('../views/orders/masterorders/index.vue'),
   }
 }
@@ -60,6 +62,16 @@ const router = createRouter({
           path: 'admin/masterorders/index',
           name:'admin.masterorders.index',
           component: admin.orders.master,
+        },
+        {
+          path: 'admin/orders/cmr/pdf',
+          name:'admin.orders.cmrpdf',
+          component: admin.orders.cmrpdf,
+        },
+        {
+          path: 'admin/orders/cmr/xml',
+          name:'admin.orders.cmr.xml',
+          component: admin.orders.cmrxml,
         },
         {
           path: 'admin/vehicles/test',
